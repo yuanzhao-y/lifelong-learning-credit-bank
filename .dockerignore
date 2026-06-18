@@ -1,0 +1,7 @@
+.git/
+.idea/
+*.iml
+*.log
+documents/
+功能需求.docx
+数据库结构.md
