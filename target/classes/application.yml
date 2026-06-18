@@ -1,0 +1,75 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: lifelong-learning-credit-bank
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/llcb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${MYSQL_USER:llcb}
+    password: ${MYSQL_PASSWORD:llcb123456}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+  sql:
+    init:
+      mode: ${SQL_INIT_MODE:always}
+      schema-locations: classpath:db/schema.sql
+      continue-on-error: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: assign_id
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+llcb:
+  crypto:
+    secret: ${DATA_CRYPTO_SECRET:llcb-development-data-crypto-key}
+  jwt:
+    issuer: llcb
+    # Use an environment secret in production.
+    secret: ${JWT_SECRET:llcb-development-secret-change-me-please-32bytes}
+    expire-minutes: ${JWT_EXPIRE_MINUTES:720}
+  security:
+    public-paths:
+      - /auth/**
+      - /public/**
+      - /swagger-ui/**
+      - /swagger-ui.html
+      - /v3/api-docs/**
+      - /actuator/health
+  tos:
+    region: ${TOS_REGION:cn-beijing}
+    endpoint: ${TOS_ENDPOINT:https://tos-cn-beijing.volces.com}
+    bucket: ${TOS_BUCKET:zhousheng1}
+    bucket-domain: ${TOS_BUCKET_DOMAIN:https://zhousheng1.tos-cn-beijing.volces.com}
+    prefix: ${TOS_PREFIX:llcb/}
+    access-key-file: ${TOS_ACCESS_KEY_FILE:C:/Users/zhous/Desktop/develop/tos/AccessKey.txt}
+  seed:
+    admin-username: ${ADMIN_USERNAME:admin}
+    admin-password: ${ADMIN_PASSWORD:Admin@123456}
+
+logging:
+  level:
+    com.zhousheng.llcb: info
+    org.springframework.security: warn
