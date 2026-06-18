@@ -1,0 +1,16 @@
+package com.zhousheng.llcb.entity;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.zhousheng.llcb.common.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@TableName("sys_dict")
+@EqualsAndHashCode(callSuper = true)
+public class SysDict extends BaseEntity {
+    private String dictCode;
+    private String dictName;
+    private String status;
+    private Integer sortNo;
+}
