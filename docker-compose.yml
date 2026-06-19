@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: ${MYSQL_IMAGE:-public.ecr.aws/docker/library/mysql:8.0.33}
+    image: ${MYSQL_IMAGE:-mysql:8.0.33}
     container_name: llcb-mysql
     restart: unless-stopped
     environment:
@@ -24,10 +24,7 @@ services:
       retries: 10
 
   redis:
-    build:
-      context: ./docker/redis
-      dockerfile: Dockerfile
-    image: llcb-redis:7.2.4
+    image: ${REDIS_IMAGE:-redis:7.2.4}
     container_name: llcb-redis
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes", "--bind", "0.0.0.0", "--protected-mode", "no"]
@@ -75,10 +72,7 @@ services:
       - "${BACKEND_PORT:-8080}:8080"
 
   nginx:
-    build:
-      context: ./docker/nginx
-      dockerfile: Dockerfile
-    image: llcb-nginx:local
+    image: ${NGINX_IMAGE:-nginx:1.25.5}
     container_name: llcb-nginx
     restart: unless-stopped
     depends_on:
@@ -89,12 +83,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
 
   jenkins:
-    build:
-      context: ./docker/jenkins
-      dockerfile: Dockerfile
-      args:
-        JENKINS_VERSION: ${JENKINS_VERSION:-2.440.1}
-    image: llcb-jenkins:${JENKINS_VERSION:-2.440.1}-lts-jdk17
+    image: ${JENKINS_IMAGE:-jenkins/jenkins:2.440.1-lts-jdk17}
     container_name: llcb-jenkins
     restart: unless-stopped
     ports:
