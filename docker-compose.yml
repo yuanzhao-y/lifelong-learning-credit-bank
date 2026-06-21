@@ -67,7 +67,7 @@ services:
       TOS_PREFIX: llcb/
       TOS_ACCESS_KEY_FILE: /run/secrets/tos_access_key
     volumes:
-      - ${TOS_ACCESS_KEY_FILE:-C:/Users/zhous/Desktop/develop/tos/AccessKey.txt}:/run/secrets/tos_access_key:ro
+      - ${TOS_ACCESS_KEY_FILE:-./AccessKey.txt}:/run/secrets/tos_access_key:ro
     ports:
       - "${BACKEND_PORT:-8080}:8080"
 
