@@ -223,7 +223,7 @@ const handleRegister = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: transparent;
   padding: 40px 20px;
 }
 .register-card {

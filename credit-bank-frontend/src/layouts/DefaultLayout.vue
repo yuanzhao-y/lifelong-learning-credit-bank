@@ -221,7 +221,7 @@ const handleUserCommand = async (command: string) => {
 .layout-container {
   display: flex;
   min-height: 100vh;
-  background: var(--bg-primary, #0a0e1a);
+  background: transparent;
 }
 
 /* Sidebar */

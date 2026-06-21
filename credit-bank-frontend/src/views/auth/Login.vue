@@ -259,7 +259,7 @@ const handleSmsLogin = async () => {
 .login-page {
   display: flex;
   min-height: 100vh;
-  background: #0a0e1a;
+  background: transparent;
 }
 
 /* Left Panel */
@@ -270,7 +270,7 @@ const handleSmsLogin = async () => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(135deg, #0a0e1a 0%, #0f172a 30%, #1e293b 100%);
+  background: rgba(10, 14, 26, 0.4);
 }
 
 .left-bg {
