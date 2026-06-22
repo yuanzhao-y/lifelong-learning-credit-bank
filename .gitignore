@@ -1,10 +1,38 @@
+# Java / Maven
 target/
+*.class
+*.jar
+*.war
+
+# IDE
 .idea/
+.vscode/
 *.iml
+
+# Logs
 *.log
+*.log.*
+logs/
+
+# Environment and local secrets
 .env
 .env.*
 !.env.example
-docker/.data/
 AccessKey.txt
 
+# Docker local data
+docker/.data/
+
+# Frontend
+node_modules/
+dist/
+coverage/
+
+# Local report materials
+素材/
+
+# Office and OS temporary files
+~$*
+.DS_Store
+Thumbs.db
+Desktop.ini

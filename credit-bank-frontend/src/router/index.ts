@@ -6,6 +6,7 @@ const router = createRouter({
   routes: [
     { path: '/login', name: 'Login', component: () => import('@/views/auth/Login.vue'), meta: { guest: true } },
     { path: '/register', name: 'Register', component: () => import('@/views/auth/Register.vue'), meta: { guest: true } },
+    { path: '/reset-password', name: 'ResetPassword', component: () => import('@/views/auth/ResetPassword.vue'), meta: { guest: true } },
     {
       path: '/',
       component: () => import('@/layouts/DefaultLayout.vue'),
@@ -19,11 +20,13 @@ const router = createRouter({
         { path: 'credit/account', name: 'CreditAccount', component: () => import('@/views/learner/credit/CreditAccount.vue'), meta: { title: '学分账户' } },
         { path: 'credit/flows', name: 'CreditFlows', component: () => import('@/views/learner/credit/CreditFlows.vue'), meta: { title: '学分流水' } },
         { path: 'conversion/apply', name: 'ConversionApply', component: () => import('@/views/learner/conversion/ConversionApply.vue'), meta: { title: '申请转换' } },
+        { path: 'conversion/rules', name: 'ConversionRuleBrowse', component: () => import('@/views/learner/conversion/RuleBrowse.vue'), meta: { title: '规则库' } },
         { path: 'conversion/list', name: 'ConversionList', component: () => import('@/views/learner/conversion/ConversionList.vue'), meta: { title: '我的转换' } },
         { path: 'profile', name: 'Profile', component: () => import('@/views/learner/profile/Profile.vue'), meta: { title: '个人信息' } },
         { path: 'profile/education', name: 'Education', component: () => import('@/views/learner/profile/Education.vue'), meta: { title: '教育经历' } },
         { path: 'profile/work', name: 'Work', component: () => import('@/views/learner/profile/Work.vue'), meta: { title: '工作经历' } },
         { path: 'messages', name: 'Messages', component: () => import('@/views/learner/message/MessageList.vue'), meta: { title: '消息中心' } },
+        { path: 'announcements', name: 'LearnerAnnouncements', component: () => import('@/views/learner/announcement/AnnouncementList.vue'), meta: { title: '系统公告' } },
         { path: 'feedback/submit', name: 'FeedbackSubmit', component: () => import('@/views/learner/feedback/FeedbackSubmit.vue'), meta: { title: '提交反馈' } },
         { path: 'feedback/list', name: 'FeedbackList', component: () => import('@/views/learner/feedback/FeedbackList.vue'), meta: { title: '我的反馈' } }
       ]

@@ -5,9 +5,18 @@
     <!-- Table -->
     <div class="table-card glass-card" v-loading="loading">
       <el-table :data="items" style="width: 100%">
-        <el-table-column prop="applicantName" label="申请人" width="120" />
-        <el-table-column prop="ruleName" label="所用转换规则" min-width="150" />
-        <el-table-column prop="sourceOutcomeName" label="来源已认定成果" min-width="150" />
+        <el-table-column label="申请编号" min-width="170">
+          <template #default="{ row }">{{ row.applicationNo || `TA-${row.id}` }}</template>
+        </el-table-column>
+        <el-table-column label="申请人" width="120">
+          <template #default="{ row }">{{ row.applicantName || `用户 #${row.applicantId}` }}</template>
+        </el-table-column>
+        <el-table-column label="所用转换规则" min-width="150">
+          <template #default="{ row }">{{ row.ruleName || `规则 #${row.ruleId}` }}</template>
+        </el-table-column>
+        <el-table-column label="来源已认定成果" min-width="150">
+          <template #default="{ row }">{{ row.sourceOutcomeName || `源成果 #${row.sourceOutcomeId}` }}</template>
+        </el-table-column>
         <el-table-column prop="sourceCredit" label="来源抵扣学分" width="120" />
         <el-table-column prop="targetCredit" label="预计获得学分" width="120" />
         <el-table-column label="操作" width="180" fixed="right">

@@ -6,6 +6,7 @@
         <p>管理系统内的正规与非正规学习成果，配置标准学分比例</p>
       </div>
       <div class="header-actions">
+        <el-button @click="importVisible = true">导入 CSV</el-button>
         <el-button type="info" @click="handleExport">导出 CSV</el-button>
         <el-button type="primary" class="gradient-btn" @click="showAddDialog">
           新建成果目录
@@ -120,6 +121,24 @@
         <el-button type="primary" :loading="saving" @click="handleSave">保存</el-button>
       </template>
     </el-dialog>
+
+    <el-dialog v-model="importVisible" title="成果目录导入证据入口" width="520px">
+      <el-alert
+        type="info"
+        :closable="false"
+        title="当前后端已提供成果目录导出接口，尚未提供导入接口；此入口用于报告截图记录导入功能缺口和扩展位置。"
+        show-icon
+      />
+      <div class="import-placeholder">
+        <el-upload drag :auto-upload="false" accept=".csv,.xlsx">
+          <el-icon class="el-icon--upload"><UploadFilled /></el-icon>
+          <div class="el-upload__text">拖拽 CSV/XLSX 到这里，或点击选择文件</div>
+          <template #tip>
+            <div class="el-upload__tip">后续可接入 /outcomes/import 类接口完成批量导入。</div>
+          </template>
+        </el-upload>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -147,6 +166,7 @@ const query = reactive({
 })
 
 const dialogVisible = ref(false)
+const importVisible = ref(false)
 const isEdit = ref(false)
 const currentId = ref<number | null>(null)
 const formRef = ref<FormInstance>()

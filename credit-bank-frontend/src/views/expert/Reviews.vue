@@ -5,11 +5,21 @@
     <!-- Table -->
     <div class="table-card glass-card" v-loading="loading">
       <el-table :data="reviews" style="width: 100%">
-        <el-table-column prop="ruleCode" label="规则编码" width="120" />
-        <el-table-column prop="ruleName" label="规则名称" min-width="150" />
-        <el-table-column prop="sourceCatalogName" label="来源成果" min-width="150" />
-        <el-table-column prop="targetCatalogName" label="目标成果" min-width="150" />
-        <el-table-column prop="conversionRatio" label="建议兑换率" width="100" />
+        <el-table-column label="规则编码" width="150">
+          <template #default="{ row }">{{ row.ruleCode || `规则 #${row.ruleId}` }}</template>
+        </el-table-column>
+        <el-table-column label="规则名称" min-width="180">
+          <template #default="{ row }">{{ row.ruleName || '待评审转换规则' }}</template>
+        </el-table-column>
+        <el-table-column label="来源成果" min-width="150">
+          <template #default="{ row }">{{ row.sourceCatalogName || '见规则详情' }}</template>
+        </el-table-column>
+        <el-table-column label="目标成果" min-width="150">
+          <template #default="{ row }">{{ row.targetCatalogName || '见规则详情' }}</template>
+        </el-table-column>
+        <el-table-column label="建议兑换率" width="110">
+          <template #default="{ row }">{{ row.conversionRatio || '待核定' }}</template>
+        </el-table-column>
         <el-table-column label="操作" width="110" fixed="right">
           <template #default="{ row }">
             <el-button link type="primary" @click="showReviewDialog(row)">评审认定</el-button>

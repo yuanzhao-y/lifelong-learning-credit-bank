@@ -15,12 +15,12 @@
     <!-- Table -->
     <div class="table-card glass-card" v-loading="loading">
       <el-table :data="messages" style="width: 100%">
-        <el-table-column prop="title" label="通知标题" min-width="150" />
-        <el-table-column prop="content" label="通知摘要" min-width="250" />
-        <el-table-column prop="senderName" label="发送人" width="120" />
-        <el-table-column prop="createdAt" label="发送时间" width="160">
+        <el-table-column prop="messageTitle" label="通知标题" min-width="150" />
+        <el-table-column prop="messageContent" label="通知摘要" min-width="250" />
+        <el-table-column prop="messageType" label="消息类型" width="120" />
+        <el-table-column prop="sentAt" label="发送时间" width="160">
           <template #default="{ row }">
-            {{ formatDateTime(row.createdAt) }}
+            {{ formatDateTime(row.sentAt || row.createdAt) }}
           </template>
         </el-table-column>
       </el-table>

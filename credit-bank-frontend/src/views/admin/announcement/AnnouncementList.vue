@@ -12,11 +12,25 @@
       </div>
     </div>
 
+    <div class="filter-bar glass-card">
+      <el-input v-model="keyword" placeholder="搜索公告标题" clearable />
+    </div>
+
     <!-- Table -->
     <div class="table-card glass-card" v-loading="loading">
-      <el-table :data="announcements" style="width: 100%">
+      <el-table :data="filteredAnnouncements" style="width: 100%">
         <el-table-column prop="title" label="公告标题" min-width="150" />
-        <el-table-column prop="views" label="浏览量" width="100" />
+        <el-table-column prop="viewCount" label="浏览量" width="100" />
+        <el-table-column prop="status" label="状态" width="120">
+          <template #default="{ row }">
+            <el-switch
+              v-model="row.status"
+              active-value="enabled"
+              inactive-value="disabled"
+              @change="(val: any) => handleStatusChange(row, val)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="publishAt" label="发布时间" width="160">
           <template #default="{ row }">
             {{ formatDate(row.publishAt) }}
@@ -60,6 +74,12 @@
             style="width: 100%"
           />
         </el-form-item>
+        <el-form-item label="发布状态" prop="status">
+          <el-radio-group v-model="form.status">
+            <el-radio label="enabled">启用发布</el-radio>
+            <el-radio label="disabled">停用草稿</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -70,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { computed, ref, reactive, onMounted } from 'vue'
 import { getAnnouncementList, createAnnouncement, updateAnnouncement, deleteAnnouncement } from '@/api/announcement'
 import { formatDate } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -79,6 +99,7 @@ import type { FormInstance } from 'element-plus'
 const loading = ref(false)
 const announcements = ref<any[]>([])
 const total = ref(0)
+const keyword = ref('')
 
 const query = reactive({
   page: 1,
@@ -94,7 +115,8 @@ const saving = ref(false)
 const form = reactive({
   title: '',
   content: '',
-  publishAt: ''
+  publishAt: '',
+  status: 'enabled'
 })
 
 const rules = {
@@ -112,10 +134,15 @@ const loadAnnouncements = async () => {
   loading.value = false
 }
 
+const filteredAnnouncements = computed(() => {
+  if (!keyword.value) return announcements.value
+  return announcements.value.filter(item => item.title?.includes(keyword.value))
+})
+
 const showAddDialog = () => {
   isEdit.value = false
   currentId.value = null
-  Object.assign(form, { title: '', content: '', publishAt: '' })
+  Object.assign(form, { title: '', content: '', publishAt: '', status: 'enabled' })
   dialogVisible.value = true
 }
 
@@ -147,6 +174,15 @@ const handleSave = async () => {
   })
 }
 
+const handleStatusChange = async (row: any, status: string) => {
+  try {
+    await updateAnnouncement(row.id, { ...row, status })
+    ElMessage.success(status === 'enabled' ? '公告已启用' : '公告已停用')
+  } catch (e) {
+    loadAnnouncements()
+  }
+}
+
 const handleDelete = (id: number) => {
   ElMessageBox.confirm('确定要删除该公告吗？', '提示').then(async () => {
     try {
@@ -172,6 +208,13 @@ onMounted(() => {
 }
 .table-card {
   padding: 20px;
+}
+.filter-bar {
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.filter-bar .el-input {
+  max-width: 320px;
 }
 .pagination-wrapper {
   display: flex;

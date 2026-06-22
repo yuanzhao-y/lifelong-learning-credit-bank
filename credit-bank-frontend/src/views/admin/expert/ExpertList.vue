@@ -15,10 +15,11 @@
     <!-- Table -->
     <div class="table-card glass-card" v-loading="loading">
       <el-table :data="experts" style="width: 100%">
-        <el-table-column prop="realName" label="专家名称" width="130" />
+        <el-table-column prop="expertName" label="专家名称" width="130" />
+        <el-table-column prop="userId" label="绑定用户ID" width="110" />
         <el-table-column prop="title" label="技术职称" width="140" />
-        <el-table-column prop="expertField" label="专长领域" min-width="150" />
-        <el-table-column prop="institution" label="工作单位" min-width="180" />
+        <el-table-column prop="professionalDirection" label="专业方向" min-width="180" />
+        <el-table-column prop="email" label="联系邮箱" min-width="180" />
         <el-table-column prop="status" label="评审状态" width="120">
           <template #default="{ row }">
             <el-select 
@@ -57,13 +58,20 @@
       <el-form :model="form" ref="formRef" :rules="rules" label-position="top">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="专家用户名 (系统内已注册用户)" prop="username" v-if="!isEdit">
-              <el-input v-model="form.username" placeholder="请输入其登录用户名" />
+            <el-form-item label="绑定系统用户" prop="userId">
+              <el-select v-model="form.userId" filterable placeholder="请选择专家角色用户" class="full-width">
+                <el-option
+                  v-for="user in userOptions"
+                  :key="user.id"
+                  :label="`${user.username} / ${user.realName || '未填姓名'} / ID:${user.id}`"
+                  :value="user.id"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="真实姓名" prop="realName">
-              <el-input v-model="form.realName" placeholder="输入姓名" />
+            <el-form-item label="专家姓名" prop="expertName">
+              <el-input v-model="form.expertName" placeholder="输入姓名" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -75,14 +83,22 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工作单位" prop="institution">
-              <el-input v-model="form.institution" placeholder="挂靠高校或企事业单位" />
+            <el-form-item label="联系邮箱" prop="email">
+              <el-input v-model="form.email" placeholder="专家联系邮箱" />
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-form-item label="专长研究领域描述" prop="expertField">
-          <el-input v-model="form.expertField" placeholder="如：计算机科学与技术、教育学等" />
+        <el-form-item label="专业方向" prop="professionalDirection">
+          <el-input v-model="form.professionalDirection" placeholder="如：计算机科学与技术、教育学等" />
+        </el-form-item>
+
+        <el-form-item label="状态" prop="status">
+          <el-radio-group v-model="form.status">
+            <el-radio label="available">可用</el-radio>
+            <el-radio label="leave">请假/非空</el-radio>
+            <el-radio label="removed">已解聘</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -96,11 +112,13 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { getExpertList, createExpert, updateExpert, deleteExpert, updateExpertStatus } from '@/api/expert'
+import { getUserList } from '@/api/user'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 
 const loading = ref(false)
 const experts = ref<any[]>([])
+const userOptions = ref<any[]>([])
 const total = ref(0)
 
 const query = reactive({
@@ -115,16 +133,18 @@ const formRef = ref<FormInstance>()
 const saving = ref(false)
 
 const form = reactive({
-  username: '',
-  realName: '',
+  userId: undefined as number | undefined,
+  expertName: '',
   title: '',
-  institution: '',
-  expertField: ''
+  professionalDirection: '',
+  email: '',
+  status: 'available'
 })
 
 const rules = {
-  username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-  realName: [{ required: true, message: '真实姓名不能为空', trigger: 'blur' }]
+  userId: [{ required: true, message: '请选择绑定用户', trigger: 'change' }],
+  expertName: [{ required: true, message: '专家姓名不能为空', trigger: 'blur' }],
+  professionalDirection: [{ required: true, message: '专业方向不能为空', trigger: 'blur' }]
 }
 
 const loadExperts = async () => {
@@ -135,6 +155,11 @@ const loadExperts = async () => {
     total.value = res.total || 0
   } catch (e) {}
   loading.value = false
+}
+
+const loadUsers = async () => {
+  const res: any = await getUserList({ page: 1, size: 200 })
+  userOptions.value = res.records || []
 }
 
 const handleStatusChange = async (id: number, val: string) => {
@@ -149,7 +174,8 @@ const handleStatusChange = async (id: number, val: string) => {
 const showAddDialog = () => {
   isEdit.value = false
   currentId.value = null
-  Object.assign(form, { username: '', realName: '', title: '', institution: '', expertField: '' })
+  Object.assign(form, { userId: undefined, expertName: '', title: '', professionalDirection: '', email: '', status: 'available' })
+  loadUsers()
   dialogVisible.value = true
 }
 
@@ -157,6 +183,7 @@ const showEditDialog = (row: any) => {
   isEdit.value = true
   currentId.value = row.id
   Object.assign(form, row)
+  loadUsers()
   dialogVisible.value = true
 }
 
@@ -192,6 +219,7 @@ const handleDelete = (id: number) => {
 }
 
 onMounted(() => {
+  loadUsers()
   loadExperts()
 })
 </script>

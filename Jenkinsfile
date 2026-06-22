@@ -1,25 +1,26 @@
 pipeline {
   agent any
 
-  tools {
-    jdk 'jdk17'
-    maven 'maven3'
-  }
-
   stages {
     stage('Checkout') {
       steps {
         checkout scm
+        sh 'git log -1 --oneline'
       }
     }
-    stage('Build') {
+    stage('Backend Package') {
       steps {
         sh 'mvn -B -DskipTests package'
       }
     }
-    stage('Docker Compose Config') {
+    stage('Docker Compose Evidence') {
       steps {
-        sh 'docker compose config >/tmp/llcb-compose.yml'
+        sh 'sed -n "1,180p" docker-compose.yml'
+      }
+    }
+    stage('Archive Artifact') {
+      steps {
+        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
       }
     }
   }

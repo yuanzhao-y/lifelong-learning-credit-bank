@@ -23,7 +23,7 @@
             <el-option
               v-for="item in myApprovedCerts"
               :key="item.id"
-              :label="`${item.outcomeName} (证书编号: ${item.certificateNo || '无'} | 可用额度: ${item.requestedCredit})`"
+              :label="`${item.outcomeName} (证书编号: ${item.certificateNo || '无'} | 可用学分: ${item.availableCredit})`"
               :value="item.id"
             />
           </el-select>
@@ -67,11 +67,11 @@
             </div>
             <div class="preview-item">
               <span class="lbl">扣减来源学分：</span>
-              <span class="val warning">{{ previewData.sourceCreditUsed }}</span>
+              <span class="val warning">{{ selectedCert?.availableCredit }}</span>
             </div>
             <div class="preview-item">
               <span class="lbl">预期获得目标学分：</span>
-              <span class="val success font-lg">{{ previewData.targetCreditEarned }}</span>
+              <span class="val success font-lg">{{ previewData.targetCredit }}</span>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { getMyCerts } from '@/api/cert'
+import { getMyLearnerOutcomes } from '@/api/outcome'
 import { matchConversionRules, previewConversion, submitConversion } from '@/api/conversion'
 import { ElMessage } from 'element-plus'
 import PageHeader from '@/components/PageHeader.vue'
@@ -122,7 +122,7 @@ const selectedRule = computed(() => {
 const loadApprovedCerts = async () => {
   certsLoading.value = true
   try {
-    const res: any = await getMyCerts({ page: 1, size: 200, status: 'approved' })
+    const res: any = await getMyLearnerOutcomes({ page: 1, size: 200 })
     myApprovedCerts.value = res.records || []
   } catch (e) {}
   certsLoading.value = false
@@ -148,9 +148,8 @@ const next = async () => {
     rulesLoading.value = true
     activeStep.value++
     try {
-      // Find sourceCatalogId
       const cert = selectedCert.value
-      const rules = await matchConversionRules(cert.catalogId)
+      const rules = await matchConversionRules(cert.id)
       matchedRules.value = rules || []
     } catch (e) {}
     rulesLoading.value = false
@@ -165,7 +164,7 @@ const next = async () => {
     previewLoading.value = true
     try {
       const cert = selectedCert.value
-      const res = await previewConversion(selectedRuleId.value!, cert.id, cert.requestedCredit)
+      const res = await previewConversion(selectedRuleId.value!, cert.id, cert.availableCredit)
       previewData.value = res
     } catch (e) {}
     previewLoading.value = false
@@ -179,7 +178,7 @@ const submit = async () => {
     await submitConversion({
       ruleId: selectedRuleId.value,
       sourceOutcomeId: cert.id,
-      sourceCredit: cert.requestedCredit
+      sourceCredit: cert.availableCredit
     })
     ElMessage.success('学分转换申请已提交，等待审核')
     router.push('/conversion/list')

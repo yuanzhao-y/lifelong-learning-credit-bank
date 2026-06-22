@@ -72,6 +72,7 @@
                 <span>成果转换</span>
               </template>
               <el-menu-item index="/conversion/apply">申请转换</el-menu-item>
+              <el-menu-item index="/conversion/rules">规则库</el-menu-item>
               <el-menu-item index="/conversion/list">我的转换</el-menu-item>
             </el-sub-menu>
 
@@ -91,6 +92,11 @@
                 <span>消息中心</span>
                 <el-badge v-if="unreadCount > 0" :value="unreadCount" :max="99" class="menu-badge" />
               </template>
+            </el-menu-item>
+
+            <el-menu-item index="/announcements">
+              <el-icon><Bell /></el-icon>
+              <template #title>系统公告</template>
             </el-menu-item>
 
             <el-sub-menu index="feedback">

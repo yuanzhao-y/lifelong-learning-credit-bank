@@ -54,7 +54,7 @@ public class CreditService {
         BigDecimal frozenBefore = nvl(account.getFrozenCredit());
         account.setBalance(balanceBefore.add(amount));
         account.setTotalEarned(nvl(account.getTotalEarned()).add(amount));
-        accountMapper.updateById(account);
+        updateAccountOrThrow(account);
         return flow(account, learnerOutcomeId, bizType, bizId, "earn", amount, balanceBefore, account.getBalance(), frozenBefore, frozenBefore, description);
     }
 
@@ -71,7 +71,7 @@ public class CreditService {
         BigDecimal frozenBefore = nvl(account.getFrozenCredit());
         account.setBalance(balanceBefore.subtract(amount));
         account.setFrozenCredit(frozenBefore.add(amount));
-        accountMapper.updateById(account);
+        updateAccountOrThrow(account);
 
         outcome.setAvailableCredit(nvl(outcome.getAvailableCredit()).subtract(amount));
         outcome.setFrozenCredit(nvl(outcome.getFrozenCredit()).add(amount));
@@ -86,7 +86,7 @@ public class CreditService {
         BigDecimal frozenBefore = nvl(account.getFrozenCredit());
         account.setBalance(balanceBefore.add(amount));
         account.setFrozenCredit(frozenBefore.subtract(amount));
-        accountMapper.updateById(account);
+        updateAccountOrThrow(account);
 
         outcome.setAvailableCredit(nvl(outcome.getAvailableCredit()).add(amount));
         outcome.setFrozenCredit(nvl(outcome.getFrozenCredit()).subtract(amount));
@@ -104,7 +104,7 @@ public class CreditService {
         BigDecimal frozenBefore = nvl(account.getFrozenCredit());
         account.setFrozenCredit(frozenBefore.subtract(amount));
         account.setTotalDeducted(nvl(account.getTotalDeducted()).add(amount));
-        accountMapper.updateById(account);
+        updateAccountOrThrow(account);
 
         outcome.setFrozenCredit(nvl(outcome.getFrozenCredit()).subtract(amount));
         outcome.setTotalCredit(nvl(outcome.getTotalCredit()).subtract(amount));
@@ -139,6 +139,12 @@ public class CreditService {
         flow.setDescription(description);
         flowMapper.insert(flow);
         return flow;
+    }
+
+    private void updateAccountOrThrow(CreditAccount account) {
+        if (accountMapper.updateById(account) == 0) {
+            throw new BusinessException("学分账户被并发修改，请重试");
+        }
     }
 
     private BigDecimal nvl(BigDecimal value) {

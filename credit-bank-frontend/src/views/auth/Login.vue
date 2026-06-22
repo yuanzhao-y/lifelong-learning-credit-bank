@@ -86,7 +86,7 @@
           </el-form-item>
           <div class="form-extra">
             <el-checkbox v-model="rememberMe" label="记住我" />
-            <a class="forgot-link" @click="router.push('/register')">忘记密码？</a>
+            <a class="forgot-link" @click="router.push('/reset-password')">忘记密码？</a>
           </div>
           <el-button
             type="primary"

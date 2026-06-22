@@ -33,10 +33,10 @@
         <div class="msg-dot" v-if="item.readStatus === 'unread'"></div>
         <div class="msg-main">
           <div class="msg-header">
-            <h4 class="msg-title">{{ item.title }}</h4>
-            <span class="msg-time">{{ formatDateTime(item.createdAt) }}</span>
+            <h4 class="msg-title">{{ item.messageTitle || item.title || `消息 #${item.messageId}` }}</h4>
+            <span class="msg-time">{{ formatDateTime(item.sentAt || item.createdAt) }}</span>
           </div>
-          <p class="msg-summary">{{ item.content }}</p>
+          <p class="msg-summary">{{ item.messageContent || item.content || `关联消息ID：${item.messageId}，点击查看完整正文` }}</p>
         </div>
       </div>
 
@@ -57,14 +57,14 @@
     </div>
 
     <!-- Message Detail Drawer -->
-    <el-drawer v-model="drawerVisible" :title="currentMsg?.title" size="35%">
+    <el-drawer v-model="drawerVisible" :title="currentMsgTitle" size="35%">
       <div class="message-drawer-content" v-if="currentMsg">
         <div class="msg-meta">
-          <span>时间：{{ formatDateTime(currentMsg.createdAt) }}</span>
+          <span>时间：{{ formatDateTime(currentMsg.sentAt || currentMsg.createdAt) }}</span>
         </div>
         <el-divider />
         <div class="msg-body">
-          {{ currentMsg.content }}
+          {{ currentMsg.messageContent || currentMsg.content }}
         </div>
       </div>
     </el-drawer>
@@ -91,6 +91,8 @@ const query = reactive({
 const drawerVisible = ref(false)
 const currentMsg = ref<any>(null)
 
+const currentMsgTitle = computed(() => currentMsg.value?.messageTitle || currentMsg.value?.title || '消息详情')
+
 const hasUnread = computed(() => {
   return messages.value.some(item => item.readStatus === 'unread')
 })
@@ -113,7 +115,7 @@ const handleSearch = () => {
 const viewMessageDetail = async (msg: any) => {
   try {
     // get detail and mark read automatically
-    const detail = await getMessageDetail(msg.id)
+    const detail = await getMessageDetail(msg.messageId || msg.id)
     currentMsg.value = detail
     drawerVisible.value = true
     

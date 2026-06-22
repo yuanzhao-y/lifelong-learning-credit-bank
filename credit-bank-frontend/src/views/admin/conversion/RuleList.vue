@@ -17,8 +17,12 @@
       <el-table :data="rules" style="width: 100%">
         <el-table-column prop="ruleCode" label="规则代码" width="120" />
         <el-table-column prop="ruleName" label="规则名称" min-width="150" />
-        <el-table-column prop="sourceCatalogName" label="来源成果目录" min-width="150" />
-        <el-table-column prop="targetCatalogName" label="目标成果目录" min-width="150" />
+        <el-table-column label="来源成果目录" min-width="150">
+          <template #default="{ row }">{{ row.sourceCatalogName || `目录 #${row.sourceCatalogId}` }}</template>
+        </el-table-column>
+        <el-table-column label="目标成果目录" min-width="150">
+          <template #default="{ row }">{{ row.targetCatalogName || `目录 #${row.targetCatalogId}` }}</template>
+        </el-table-column>
         <el-table-column prop="conversionRatio" label="兑换比率" width="100" />
         <el-table-column prop="status" label="状态" width="110">
           <template #default="{ row }">
@@ -115,7 +119,7 @@
           <el-option
             v-for="item in experts"
             :key="item.id"
-            :label="`${item.realName} [领域：${item.expertField || '未填'}]`"
+            :label="`${item.expertName} [方向：${item.professionalDirection || '未填'} | 用户ID：${item.userId}]`"
             :value="item.id"
           />
         </el-select>
