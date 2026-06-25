@@ -183,6 +183,43 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>check-core-coverage</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>com/zhousheng/llcb/service/CreditService.class</include>
+                                <include>com/zhousheng/llcb/service/CertificationService.class</include>
+                                <include>com/zhousheng/llcb/service/ConversionService.class</include>
+                                <include>com/zhousheng/llcb/service/ConversionRuleService.class</include>
+                                <include>com/zhousheng/llcb/service/AuthService.class</include>
+                                <include>com/zhousheng/llcb/service/SensitiveDataService.class</include>
+                                <include>com/zhousheng/llcb/security/JwtService.class</include>
+                                <include>com/zhousheng/llcb/security/JwtAuthenticationFilter.class</include>
+                                <include>com/zhousheng/llcb/security/LoginAttemptService.class</include>
+                            </includes>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.55</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

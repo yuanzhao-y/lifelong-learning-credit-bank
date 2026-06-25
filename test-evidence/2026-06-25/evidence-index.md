@@ -3,6 +3,12 @@
 | Evidence | Purpose |
 | --- | --- |
 | `version-manifest.md` | Tested source, requirements, schema, artifact and image identities |
+| `source-diff-2480-to-16bb.md` | Source equivalence evidence between functional/security testing commit and infrastructure CI commit |
+| `artifact-lineage.md` | Commit, Jar, image, frontend artifact and Jenkins archive relationship |
+| `evidence-map.md` | Evidence IDs with paths, source, environment, SHA and Jenkins-generation status |
+| `environment.md` | Host, toolchain, service exposure, image digest and data-scale context |
+| `manifest.sha256` | SHA-256 manifest for the evidence package |
+| `post-review-verification.md` | Local verification after report hardening and JaCoCo gate addition |
 | `api-audit.json`, `api-audit-summary.md` | 58 API, security and concurrency checks |
 | `database-audit.txt` | Post-test consistency counts and index plans |
 | `surefire/TEST-*.xml` | 24 test classes and 94 JUnit cases |
@@ -11,7 +17,7 @@
 | `frontend-dist-sha256.txt`, `npm-audit.json` | Frontend artifact identity and dependency audit |
 | `performance-*.jtl`, `performance-*.log`, `performance-summary.*` | JMeter raw samples and aggregate metrics |
 | `performance-docker-stats.csv` | Container CPU and memory samples during load |
-| `recovery-audit.json`, `recovery-audit.md` | Container restart and volume persistence checks |
+| `recovery-audit.json`, `recovery-audit.md` | Container restart and volume persistence checks; not disaster recovery |
 | `zap-report.*` | First ZAP scan; retained as invalid-configuration evidence |
 | `zap-api-corrected-timeout.log` | Corrected scan imported 120 URLs but exceeded its time limit |
 | `osv-scan.json`, `dependency-security-summary.md` | Dependency and dynamic scanning limitations |
@@ -20,3 +26,5 @@
 
 All evidence was checked for non-empty files where applicable. Tokens,
 AccessKey values, verification codes and real passwords are not included.
+Use `manifest.sha256` to verify file integrity when the evidence package is
+copied outside the repository.
