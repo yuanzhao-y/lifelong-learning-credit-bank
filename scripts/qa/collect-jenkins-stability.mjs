@@ -25,20 +25,21 @@ const buildNumbers = dockerShell(`find ${buildsRoot} -maxdepth 1 -type l -o -typ
 
 const builds = buildNumbers.map((number) => {
   const base = `${buildsRoot}/${number}`;
-  const log = dockerShell(`test -f ${base}/log && tail -n 220 ${base}/log || true`);
+  const log = dockerShell(`test -f ${base}/log && cat ${base}/log || true`);
   const buildXml = dockerShell(`test -f ${base}/build.xml && cat ${base}/build.xml || true`);
   const result = (buildXml.match(/<result>([^<]+)<\/result>/) || [null, "UNKNOWN"])[1];
   const duration = (buildXml.match(/<duration>([^<]+)<\/duration>/) || [null, "UNKNOWN"])[1];
-  const commitMatch = log.match(/[0-9a-f]{40}/);
+  const checkoutMatch = log.match(/Checking out Revision\s+([0-9a-f]{40})/);
+  const buildDataMatch = buildXml.match(/<marked>\s*<SHA1>([0-9a-f]{40})<\/SHA1>/);
   const archiveMatch = log.match(/Archiving artifacts[\s\S]*?(?:Recording fingerprints|Finished:)/);
   return {
     number,
     result,
     durationMilliseconds: duration,
-    commit: commitMatch?.[0] || null,
-    hasCleanWorkspaceSignal: /cleanWs|Wiping out workspace|Deleting project workspace|Checkout/.test(log),
-    hasBackendVerify: /mvn -B clean verify|check-core-coverage|BUILD SUCCESS/.test(log),
-    hasFrontendBuild: /npm ci|npm run build/.test(log),
+    commit: checkoutMatch?.[1] || buildDataMatch?.[1] || null,
+    hasCleanWorkspaceSignal: /Checkout|Checking out Revision/.test(log),
+    hasBackendVerify: /mvn -B clean verify[\s\S]*Tests run:\s*111, Failures:\s*0, Errors:\s*0, Skipped:\s*0[\s\S]*check-core-coverage/.test(log),
+    hasFrontendBuild: /npm ci[\s\S]*npm audit --audit-level=low[\s\S]*npm run build/.test(log),
     hasComposeCheck: /docker-compose config --quiet/.test(log),
     hasArchive: /Archiving artifacts|Recording fingerprints/.test(log),
     archiveExcerpt: archiveMatch?.[0]?.slice(0, 1000) || "",
