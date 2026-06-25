@@ -1,0 +1,21 @@
+Checking out Revision 30fcd870310826c87845b2e284ac34e72ec6e87c (refs/remotes/origin/develop)
+Commit message: "test: close audit evidence gaps"
+[2026-06-25T06:29:36.348Z] + git log -1 --oneline
+[2026-06-25T06:29:36.348Z] 30fcd87 test: close audit evidence gaps
+[2026-06-25T06:29:37.174Z] + java -version
+[2026-06-25T06:29:37.174Z] openjdk version "17.0.18" 2026-01-20
+[2026-06-25T06:29:37.465Z] + mvn -version
+[2026-06-25T06:29:37.465Z] Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
+[2026-06-25T06:29:38.285Z] + mvn -B clean verify
+[2026-06-25T06:29:47.908Z] [INFO] Tests run: 94, Failures: 0, Errors: 0, Skipped: 0
+[2026-06-25T06:29:48.659Z] [INFO] --- jacoco:0.8.12:check (check-core-coverage) @ lifelong-learning-credit-bank ---
+[2026-06-25T06:29:48.659Z] [INFO] Analyzed bundle 'lifelong-learning-credit-bank' with 9 classes
+[2026-06-25T06:29:48.659Z] [INFO] All coverage checks have been met.
+[2026-06-25T06:29:49.603Z] + npm ci
+[2026-06-25T06:29:54.032Z] + npm run build
+[2026-06-25T06:29:58.426Z] built in 1.20s
+[2026-06-25T06:29:59.402Z] + docker-compose config --quiet
+[2026-06-25T06:29:59.403Z]       - "127.0.0.1:${JENKINS_PORT:-8081}:8080"
+[2026-06-25T06:30:00.085Z] Archiving artifacts
+[2026-06-25T06:30:00.144Z] Recording fingerprints
+Finished: SUCCESS

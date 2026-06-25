@@ -21,6 +21,7 @@
 | EV-ZAP-002 | Corrected ZAP timeout | `zap-api-corrected-timeout.log` | ZAP corrected import | Local ZAP | `2480b084...` | No |
 | EV-CI-007 | Jenkins Build #7 | `jenkins-build-7.md`, `jenkins-build-7-stage-view.png` | Jenkins pipeline | Jenkins container | `2480b084...` | Yes |
 | EV-CI-008 | Jenkins Build #8 | `jenkins-build-8.md` | Jenkins pipeline | Jenkins container | `16bbf1ed...` | Yes |
+| EV-CI-009 | Jenkins Build #9 | `jenkins-build-9.md`, `jenkins-build-9-summary.log` | Jenkins pipeline | Jenkins container | `30fcd870310826c87845b2e284ac34e72ec6e87c` | Yes |
 | EV-LOCAL-001 | Post-review local gate | `post-review-verification.md` | Maven/npm verification | Local toolchain | local working tree after `16bbf1ed...` | No |
 | EV-LINEAGE-001 | Artifact lineage | `artifact-lineage.md` | Hash/fingerprint consolidation | Local/Jenkins | mixed, stated per row | Mixed |
 | EV-MANIFEST-001 | Evidence package manifest | `manifest.sha256` | SHA-256 hashing | Local filesystem | current evidence package | No |

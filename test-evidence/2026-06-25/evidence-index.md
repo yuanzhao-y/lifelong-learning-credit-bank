@@ -23,6 +23,7 @@
 | `osv-scan.json`, `dependency-security-summary.md` | Dependency and dynamic scanning limitations |
 | `jenkins-build-7-summary.log`, `jenkins-build-7.md`, `jenkins-build-7-stage-view.png` | First complete remote Pipeline and page evidence |
 | `jenkins-build-8-summary.log`, `jenkins-build-8.md` | Final infrastructure commit Pipeline result |
+| `jenkins-build-9-summary.log`, `jenkins-build-9.md` | Remote CI gate closure after JaCoCo check was committed |
 
 All evidence was checked for non-empty files where applicable. Tokens,
 AccessKey values, verification codes and real passwords are not included.

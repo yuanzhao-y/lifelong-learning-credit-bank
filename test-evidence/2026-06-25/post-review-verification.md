@@ -19,7 +19,5 @@ Local backend Jar after post-review verification:
 | SHA-256 | 364fdc4ce886da407c064581e8eddc6d46116de155549a2dff4d4fada3017254 |
 | Size bytes | 60386718 |
 
-This post-review verification is local. Jenkins Build #8 remains the final
-remote CI evidence for commit 16bbf1ed9afc1265dc03001cf6a0fc96c83a800a; the
-new JaCoCo gate will be enforced by the next Jenkins build because it is now in
-pom.xml.
+This post-review verification is local. Jenkins Build #9 is the remote CI
+evidence for the committed JaCoCo gate and report-hardening changes.
