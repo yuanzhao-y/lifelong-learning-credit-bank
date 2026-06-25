@@ -2,6 +2,7 @@ package com.zhousheng.llcb.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.common.Constants;
 import com.zhousheng.llcb.dto.BizDtos;
@@ -76,25 +77,22 @@ public class CertificationService {
     @Transactional
     public void withdraw(Long applicationId) {
         CertApplication application = ownApplication(applicationId);
-        if (!Constants.STATUS_PENDING.equals(application.getStatus())) {
+        int updated = applicationMapper.update(null, new UpdateWrapper<CertApplication>()
+                .eq("id", applicationId)
+                .eq("applicant_id", SecurityUtils.currentUserId())
+                .eq("status", Constants.STATUS_PENDING)
+                .set("status", Constants.STATUS_WITHDRAWN)
+                .set("withdrawn_at", LocalDateTime.now()));
+        if (updated == 0) {
             throw new BusinessException("只有待审核申请可以撤回");
         }
-        String from = application.getStatus();
-        application.setStatus(Constants.STATUS_WITHDRAWN);
-        application.setWithdrawnAt(LocalDateTime.now());
-        applicationMapper.updateById(application);
-        auditTrailService.record("cert_application", applicationId, "withdraw", from, Constants.STATUS_WITHDRAWN, null);
+        auditTrailService.record("cert_application", applicationId, "withdraw",
+                application.getStatus(), Constants.STATUS_WITHDRAWN, null);
     }
 
     @Transactional
     public void approve(Long applicationId, BigDecimal recognizedCredit) {
-        CertApplication application = applicationMapper.selectById(applicationId);
-        if (application == null) {
-            throw new BusinessException("申请不存在");
-        }
-        if (!Constants.STATUS_PENDING.equals(application.getStatus())) {
-            throw new BusinessException("申请已处理");
-        }
+        CertApplication application = claimPending(applicationId);
         BigDecimal credit = recognizedCredit != null ? recognizedCredit : application.getRequestedCredit();
         if (credit == null || credit.compareTo(BigDecimal.ZERO) <= 0) {
             throw new BusinessException("认定学分必须大于 0");
@@ -132,13 +130,7 @@ public class CertificationService {
 
     @Transactional
     public void reject(Long applicationId, String reason) {
-        CertApplication application = applicationMapper.selectById(applicationId);
-        if (application == null) {
-            throw new BusinessException("申请不存在");
-        }
-        if (!Constants.STATUS_PENDING.equals(application.getStatus())) {
-            throw new BusinessException("申请已处理");
-        }
+        CertApplication application = claimPending(applicationId);
         String from = application.getStatus();
         application.setStatus(Constants.STATUS_REJECTED);
         application.setAuditUserId(SecurityUtils.currentUserId());
@@ -162,6 +154,23 @@ public class CertificationService {
         CertApplication application = applicationMapper.selectById(applicationId);
         if (application == null || !SecurityUtils.currentUserId().equals(application.getApplicantId())) {
             throw new BusinessException("申请不存在");
+        }
+        return application;
+    }
+
+    private CertApplication claimPending(Long applicationId) {
+        CertApplication application = applicationMapper.selectById(applicationId);
+        if (application == null) {
+            throw new BusinessException("申请不存在");
+        }
+        int updated = applicationMapper.update(null, new UpdateWrapper<CertApplication>()
+                .eq("id", applicationId)
+                .eq("status", Constants.STATUS_PENDING)
+                .set("status", "processing")
+                .set("audit_user_id", SecurityUtils.currentUserId())
+                .set("audited_at", LocalDateTime.now()));
+        if (updated == 0) {
+            throw new BusinessException("申请已被其他审核员处理");
         }
         return application;
     }

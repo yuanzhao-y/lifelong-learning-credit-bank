@@ -171,7 +171,7 @@ SecretAccessKey=yyy
 | `redis` | `redis:7.2.4` | `redis-data:/data` |
 | `backend` | 项目根目录 `Dockerfile` | 无业务数据卷 |
 | `nginx` | `nginx:1.25.5` | 只读挂载 Nginx 配置 |
-| `jenkins` | `jenkins/jenkins:2.440.1-lts-jdk17` | `jenkins-home:/var/jenkins_home` |
+| `jenkins` | `jenkins/jenkins:2.541.3-lts-jdk17` | `jenkins-home:/var/jenkins_home` |
 
 停止容器但保留数据：
 

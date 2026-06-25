@@ -30,3 +30,6 @@ export function getDictItemsByCode(dictCode: string) { return request.get(`/dict
 export function evictDictCache(dictCode: string) { return request.delete(`/dicts/${dictCode}/cache`) }
 // 操作日志
 export function getOperationLogs(params: any) { return request.get('/admin/operation-logs', { params }) }
+export function exportOperationLogs(params: any) {
+  return request.get('/admin/operation-logs/export', { params, responseType: 'blob' })
+}

@@ -6,6 +6,10 @@ server:
 spring:
   application:
     name: lifelong-learning-credit-bank
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 21MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_URL:jdbc:mysql://localhost:3306/llcb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true}
@@ -58,6 +62,33 @@ llcb:
       - /swagger-ui.html
       - /v3/api-docs/**
       - /actuator/health
+    allowed-origins:
+      - ${FRONTEND_ORIGIN:http://127.0.0.1:3000}
+      - http://localhost:3000
+    expose-dev-sms-code: ${EXPOSE_DEV_SMS_CODE:false}
+  upload:
+    max-bytes: ${UPLOAD_MAX_BYTES:20971520}
+    allowed-extensions:
+      - png
+      - jpg
+      - jpeg
+      - pdf
+      - txt
+      - csv
+      - doc
+      - docx
+      - xls
+      - xlsx
+    allowed-content-types:
+      - image/png
+      - image/jpeg
+      - application/pdf
+      - text/plain
+      - text/csv
+      - application/msword
+      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      - application/vnd.ms-excel
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
   tos:
     region: ${TOS_REGION:cn-beijing}
     endpoint: ${TOS_ENDPOINT:https://tos-cn-beijing.volces.com}

@@ -40,15 +40,26 @@ public class ProfileController {
 
     @PutMapping("/educations/{id}")
     public ApiResponse<Void> updateEducation(@PathVariable Long id, @RequestBody LearnerEducationExperience education) {
-        education.setId(id);
-        education.setUserId(SecurityUtils.currentUserId());
-        educationMapper.updateById(education);
+        Long userId = SecurityUtils.currentUserId();
+        education.setId(null);
+        education.setUserId(null);
+        int updated = educationMapper.update(education, new LambdaQueryWrapper<LearnerEducationExperience>()
+                .eq(LearnerEducationExperience::getId, id)
+                .eq(LearnerEducationExperience::getUserId, userId));
+        if (updated == 0) {
+            throw new com.zhousheng.llcb.common.BusinessException(404, "教育经历不存在");
+        }
         return ApiResponse.ok();
     }
 
     @DeleteMapping("/educations/{id}")
     public ApiResponse<Void> deleteEducation(@PathVariable Long id) {
-        educationMapper.deleteById(id);
+        int deleted = educationMapper.delete(new LambdaQueryWrapper<LearnerEducationExperience>()
+                .eq(LearnerEducationExperience::getId, id)
+                .eq(LearnerEducationExperience::getUserId, SecurityUtils.currentUserId()));
+        if (deleted == 0) {
+            throw new com.zhousheng.llcb.common.BusinessException(404, "教育经历不存在");
+        }
         return ApiResponse.ok();
     }
 
@@ -68,15 +79,26 @@ public class ProfileController {
 
     @PutMapping("/works/{id}")
     public ApiResponse<Void> updateWork(@PathVariable Long id, @RequestBody LearnerWorkExperience work) {
-        work.setId(id);
-        work.setUserId(SecurityUtils.currentUserId());
-        workMapper.updateById(work);
+        Long userId = SecurityUtils.currentUserId();
+        work.setId(null);
+        work.setUserId(null);
+        int updated = workMapper.update(work, new LambdaQueryWrapper<LearnerWorkExperience>()
+                .eq(LearnerWorkExperience::getId, id)
+                .eq(LearnerWorkExperience::getUserId, userId));
+        if (updated == 0) {
+            throw new com.zhousheng.llcb.common.BusinessException(404, "工作经历不存在");
+        }
         return ApiResponse.ok();
     }
 
     @DeleteMapping("/works/{id}")
     public ApiResponse<Void> deleteWork(@PathVariable Long id) {
-        workMapper.deleteById(id);
+        int deleted = workMapper.delete(new LambdaQueryWrapper<LearnerWorkExperience>()
+                .eq(LearnerWorkExperience::getId, id)
+                .eq(LearnerWorkExperience::getUserId, SecurityUtils.currentUserId()));
+        if (deleted == 0) {
+            throw new com.zhousheng.llcb.common.BusinessException(404, "工作经历不存在");
+        }
         return ApiResponse.ok();
     }
 }

@@ -1,6 +1,8 @@
 package com.zhousheng.llcb.service;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.common.Constants;
 import com.zhousheng.llcb.entity.SysMessage;
 import com.zhousheng.llcb.entity.SysMessageReceiver;
@@ -43,6 +45,7 @@ public class MessageService {
     }
 
     public void markRead(Long receiverId, Long messageId) {
+        requireReceiver(receiverId, messageId);
         receiverMapper.update(null, new LambdaUpdateWrapper<SysMessageReceiver>()
                 .eq(SysMessageReceiver::getReceiverId, receiverId)
                 .eq(SysMessageReceiver::getMessageId, messageId)
@@ -56,5 +59,15 @@ public class MessageService {
                 .eq(SysMessageReceiver::getReadStatus, Constants.STATUS_UNREAD)
                 .set(SysMessageReceiver::getReadStatus, Constants.STATUS_READ)
                 .set(SysMessageReceiver::getReadAt, LocalDateTime.now()));
+    }
+
+    public void requireReceiver(Long receiverId, Long messageId) {
+        long count = receiverMapper.selectCount(new LambdaQueryWrapper<SysMessageReceiver>()
+                .eq(SysMessageReceiver::getReceiverId, receiverId)
+                .eq(SysMessageReceiver::getMessageId, messageId)
+                .eq(SysMessageReceiver::getReceiverDeleted, 0));
+        if (count == 0) {
+            throw new BusinessException(404, "消息不存在");
+        }
     }
 }

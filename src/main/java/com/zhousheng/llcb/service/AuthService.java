@@ -12,12 +12,15 @@ import com.zhousheng.llcb.mapper.SysRoleMapper;
 import com.zhousheng.llcb.mapper.SysSmsCodeMapper;
 import com.zhousheng.llcb.mapper.SysUserMapper;
 import com.zhousheng.llcb.security.JwtService;
+import com.zhousheng.llcb.security.LoginAttemptService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -32,6 +35,7 @@ public class AuthService {
     private final RoleService roleService;
     private final CreditService creditService;
     private final SensitiveDataService sensitiveDataService;
+    private final LoginAttemptService loginAttemptService;
 
     public AuthService(SysUserMapper userMapper,
                        SysRoleMapper roleMapper,
@@ -40,7 +44,8 @@ public class AuthService {
                        JwtService jwtService,
                        RoleService roleService,
                        CreditService creditService,
-                       SensitiveDataService sensitiveDataService) {
+                       SensitiveDataService sensitiveDataService,
+                       LoginAttemptService loginAttemptService) {
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
         this.smsCodeMapper = smsCodeMapper;
@@ -49,10 +54,12 @@ public class AuthService {
         this.roleService = roleService;
         this.creditService = creditService;
         this.sensitiveDataService = sensitiveDataService;
+        this.loginAttemptService = loginAttemptService;
     }
 
     @Transactional
     public SysUser register(AuthDtos.RegisterRequest request) {
+        validatePassword(request.password());
         ensureUsernameAvailable(request.username(), null);
         String phoneHash = sensitiveDataService.hash(request.phone());
         if (StringUtils.hasText(phoneHash) && userMapper.selectCount(new LambdaQueryWrapper<SysUser>()
@@ -71,7 +78,7 @@ public class AuthService {
         user.setBirthPlace(request.birthPlace());
         user.setCurrentAddress(request.currentAddress());
         user.setStatus(Constants.STATUS_ENABLED);
-        user.setPasswordUpdatedAt(LocalDateTime.now());
+        user.setPasswordUpdatedAt(nextPasswordVersion(null));
         userMapper.insert(user);
 
         SysRole learner = roleMapper.selectOne(new LambdaQueryWrapper<SysRole>()
@@ -85,13 +92,16 @@ public class AuthService {
     }
 
     public AuthDtos.AuthResponse passwordLogin(AuthDtos.PasswordLoginRequest request, String ip) {
+        loginAttemptService.checkAllowed(request.username(), ip);
         SysUser user = userMapper.selectOne(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUsername, request.username())
                 .last("limit 1"));
         if (user == null || !passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+            loginAttemptService.recordFailure(request.username(), ip);
             throw new BusinessException("账号或密码错误");
         }
         assertEnabled(user);
+        loginAttemptService.clear(request.username(), ip);
         return loginSuccess(user, ip);
     }
 
@@ -109,9 +119,21 @@ public class AuthService {
 
     @Transactional
     public String issueSmsCode(AuthDtos.SmsCodeRequest request, String ip) {
+        String phoneHash = sensitiveDataService.hash(request.phone());
+        LocalDateTime oneMinuteAgo = LocalDateTime.now().minusMinutes(1);
+        long recentRequests = smsCodeMapper.selectCount(new LambdaQueryWrapper<SysSmsCode>()
+                .eq(SysSmsCode::getPhoneHash, phoneHash)
+                .eq(SysSmsCode::getScene, request.scene())
+                .ge(SysSmsCode::getCreatedAt, oneMinuteAgo));
+        long recentIpRequests = smsCodeMapper.selectCount(new LambdaQueryWrapper<SysSmsCode>()
+                .eq(SysSmsCode::getRequestIp, ip)
+                .ge(SysSmsCode::getCreatedAt, oneMinuteAgo));
+        if (recentRequests > 0 || recentIpRequests >= 5) {
+            throw new BusinessException(429, "验证码发送过于频繁，请稍后重试");
+        }
         String code = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
         SysSmsCode smsCode = new SysSmsCode();
-        smsCode.setPhoneHash(sensitiveDataService.hash(request.phone()));
+        smsCode.setPhoneHash(phoneHash);
         smsCode.setScene(request.scene());
         smsCode.setCodeHash(passwordEncoder.encode(code));
         smsCode.setExpireAt(LocalDateTime.now().plusMinutes(5));
@@ -123,6 +145,7 @@ public class AuthService {
 
     @Transactional
     public void resetPassword(AuthDtos.ResetPasswordRequest request) {
+        validatePassword(request.newPassword());
         validateSmsCode(request.phone(), "reset_password", request.code());
         SysUser user = userMapper.selectOne(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getPhoneHash, sensitiveDataService.hash(request.phone()))
@@ -131,18 +154,19 @@ public class AuthService {
             throw new BusinessException("手机号未注册");
         }
         user.setPasswordHash(passwordEncoder.encode(request.newPassword()));
-        user.setPasswordUpdatedAt(LocalDateTime.now());
+        user.setPasswordUpdatedAt(nextPasswordVersion(user.getPasswordUpdatedAt()));
         userMapper.updateById(user);
     }
 
     @Transactional
     public void changePassword(Long userId, AuthDtos.ChangePasswordRequest request) {
+        validatePassword(request.newPassword());
         SysUser user = userMapper.selectById(userId);
         if (user == null || !passwordEncoder.matches(request.oldPassword(), user.getPasswordHash())) {
             throw new BusinessException("旧密码错误");
         }
         user.setPasswordHash(passwordEncoder.encode(request.newPassword()));
-        user.setPasswordUpdatedAt(LocalDateTime.now());
+        user.setPasswordUpdatedAt(nextPasswordVersion(user.getPasswordUpdatedAt()));
         userMapper.updateById(user);
     }
 
@@ -155,6 +179,9 @@ public class AuthService {
                 .gt(SysSmsCode::getExpireAt, LocalDateTime.now())
                 .orderByDesc(SysSmsCode::getCreatedAt)
                 .last("limit 1"));
+        if (smsCode != null && smsCode.getVerifyFailCount() != null && smsCode.getVerifyFailCount() >= 5) {
+            throw new BusinessException(429, "验证码尝试次数过多，请重新获取");
+        }
         if (smsCode == null || !passwordEncoder.matches(code, smsCode.getCodeHash())) {
             if (smsCode != null) {
                 smsCodeMapper.update(null, new LambdaUpdateWrapper<SysSmsCode>()
@@ -183,7 +210,11 @@ public class AuthService {
         user.setLastLoginIp(ip);
         userMapper.updateById(user);
         var roles = roleService.roleCodes(user.getId());
-        String token = jwtService.createToken(user.getId(), user.getUsername(), Map.of("roles", roles));
+        long passwordVersion = user.getPasswordUpdatedAt() == null
+                ? 0L
+                : user.getPasswordUpdatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        String token = jwtService.createToken(user.getId(), user.getUsername(),
+                Map.of("roles", roles, "pwdAt", passwordVersion));
         return new AuthDtos.AuthResponse(token, user.getId(), user.getUsername(), roles);
     }
 
@@ -191,5 +222,26 @@ public class AuthService {
         if (!Constants.STATUS_ENABLED.equals(user.getStatus())) {
             throw new BusinessException("账号状态不可用");
         }
+    }
+
+    private void validatePassword(String password) {
+        if (!StringUtils.hasText(password)
+                || password.length() < 8
+                || password.length() > 64
+                || !password.matches(".*[A-Z].*")
+                || !password.matches(".*[a-z].*")
+                || !password.matches(".*\\d.*")
+                || !password.matches(".*[^A-Za-z0-9].*")) {
+            throw new BusinessException("密码必须为 8-64 位，并包含大小写字母、数字和特殊字符");
+        }
+    }
+
+    private LocalDateTime nextPasswordVersion(LocalDateTime current) {
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+        if (current == null) {
+            return now;
+        }
+        LocalDateTime next = current.truncatedTo(ChronoUnit.SECONDS).plusSeconds(1);
+        return now.isAfter(next) ? now : next;
     }
 }

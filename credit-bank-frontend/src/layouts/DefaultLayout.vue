@@ -121,12 +121,16 @@
         </div>
       </div>
     </aside>
+    <div v-if="isCollapsed" class="sidebar-overlay" @click="isCollapsed = false" />
 
     <!-- Main Content -->
     <div class="main-container" :class="{ expanded: isCollapsed }">
       <!-- Header -->
       <header class="main-header">
         <div class="header-left">
+          <button class="mobile-menu-btn" type="button" aria-label="打开导航菜单" @click="isCollapsed = true">
+            <el-icon :size="20"><Menu /></el-icon>
+          </button>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item v-for="item in breadcrumbs" :key="item.path">
@@ -200,6 +204,10 @@ const breadcrumbs = computed(() => {
   return matched.map(r => ({ path: r.path, title: r.meta.title as string }))
 })
 
+watch(() => route.path, () => {
+  if (window.innerWidth <= 768) isCollapsed.value = false
+})
+
 const handleUserCommand = async (command: string) => {
   switch (command) {
     case 'profile':
@@ -227,6 +235,8 @@ const handleUserCommand = async (command: string) => {
 .layout-container {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background: transparent;
 }
 
@@ -410,6 +420,7 @@ const handleUserCommand = async (command: string) => {
 /* Main Container */
 .main-container {
   flex: 1;
+  min-width: 0;
   margin-left: 260px;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -443,6 +454,32 @@ const handleUserCommand = async (command: string) => {
 
 .header-left :deep(.el-breadcrumb__separator) {
   color: #475569 !important;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+}
+
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.sidebar-overlay {
+  display: none;
 }
 
 .header-right {
@@ -496,8 +533,10 @@ const handleUserCommand = async (command: string) => {
 /* Content */
 .main-content {
   flex: 1;
+  min-width: 0;
   padding: 24px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Transitions */
@@ -533,8 +572,28 @@ const handleUserCommand = async (command: string) => {
     width: 260px;
     transform: translateX(0);
   }
-  .main-container {
-    margin-left: 0 !important;
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    background: rgba(2, 6, 23, 0.64);
   }
+  .main-container {
+    width: 100%;
+    margin-left: 0 !important;
+    overflow-x: hidden;
+  }
+  .main-header { padding: 0 12px; }
+  .mobile-menu-btn { display: flex; }
+  .header-left { overflow: hidden; }
+  .header-left :deep(.el-breadcrumb) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .dropdown-username { display: none; }
+  .user-dropdown-trigger { padding-right: 4px; }
+  .main-content { padding: 16px 12px; }
 }
 </style>

@@ -3,6 +3,7 @@ package com.zhousheng.llcb.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhousheng.llcb.common.ApiResponse;
+import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.config.MybatisPlusConfig;
 import com.zhousheng.llcb.dto.BizDtos;
 import com.zhousheng.llcb.entity.BizAuditRecord;
@@ -66,6 +67,7 @@ public class ConversionApplicationController {
 
     @GetMapping("/{id}/audit-records")
     public ApiResponse<List<BizAuditRecord>> auditRecords(@PathVariable Long id) {
+        assertCanViewApplication(id);
         return ApiResponse.ok(auditRecordMapper.selectList(new LambdaQueryWrapper<BizAuditRecord>()
                 .eq(BizAuditRecord::getBizType, "conversion_application")
                 .eq(BizAuditRecord::getBizId, id)
@@ -98,5 +100,15 @@ public class ConversionApplicationController {
     public ApiResponse<Void> reject(@PathVariable Long id, @RequestBody BizDtos.AuditRequest request) {
         conversionService.reject(id, request.reason());
         return ApiResponse.ok();
+    }
+
+    private void assertCanViewApplication(Long id) {
+        if (SecurityUtils.hasRole("admin") || SecurityUtils.hasRole("auditor")) {
+            return;
+        }
+        ConversionApplication application = applicationMapper.selectById(id);
+        if (application == null || !SecurityUtils.currentUserId().equals(application.getApplicantId())) {
+            throw new BusinessException(404, "转换申请不存在");
+        }
     }
 }

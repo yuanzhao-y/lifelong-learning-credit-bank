@@ -6,7 +6,7 @@
         <p>管理系统内的正规与非正规学习成果，配置标准学分比例</p>
       </div>
       <div class="header-actions">
-        <el-button @click="importVisible = true">导入 CSV</el-button>
+        <el-button @click="openImportDialog">导入 CSV</el-button>
         <el-button type="info" @click="handleExport">导出 CSV</el-button>
         <el-button type="primary" class="gradient-btn" @click="showAddDialog">
           新建成果目录
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Edit/Add Dialog -->
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑成果' : '新建成果目录'" width="45%">
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑成果' : '新建成果目录'" width="min(680px, 92vw)">
       <el-form :model="form" ref="formRef" :rules="rules" label-position="top">
         <el-row :gutter="20">
           <el-col :span="12">
@@ -122,22 +122,44 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="importVisible" title="成果目录导入证据入口" width="520px">
+    <el-dialog v-model="importVisible" title="导入成果目录" width="min(520px, 92vw)">
       <el-alert
         type="info"
         :closable="false"
-        title="当前后端已提供成果目录导出接口，尚未提供导入接口；此入口用于报告截图记录导入功能缺口和扩展位置。"
+        title="支持 UTF-8 CSV。相同成果代码将更新，其他有效记录将新增。"
         show-icon
       />
       <div class="import-placeholder">
-        <el-upload drag :auto-upload="false" accept=".csv,.xlsx">
+        <el-upload
+          drag
+          :auto-upload="true"
+          accept=".csv"
+          :show-file-list="false"
+          :disabled="importing"
+          :http-request="handleImportUpload"
+        >
           <el-icon class="el-icon--upload"><UploadFilled /></el-icon>
-          <div class="el-upload__text">拖拽 CSV/XLSX 到这里，或点击选择文件</div>
+          <div class="el-upload__text">拖拽 CSV 到这里，或点击选择文件</div>
           <template #tip>
-            <div class="el-upload__tip">后续可接入 /outcomes/import 类接口完成批量导入。</div>
+            <div class="el-upload__tip">文件不超过 5 MB，最多 10000 行；错误行不会影响其他有效记录。</div>
           </template>
         </el-upload>
       </div>
+      <el-descriptions v-if="importResult" :column="2" border class="import-result">
+        <el-descriptions-item label="Total">{{ importResult.totalRows }}</el-descriptions-item>
+        <el-descriptions-item label="Created">{{ importResult.createdCount }}</el-descriptions-item>
+        <el-descriptions-item label="Updated">{{ importResult.updatedCount }}</el-descriptions-item>
+        <el-descriptions-item label="Skipped">{{ importResult.skippedCount }}</el-descriptions-item>
+      </el-descriptions>
+      <el-table
+        v-if="importResult?.errors?.length"
+        :data="importResult.errors"
+        size="small"
+        class="import-errors"
+      >
+        <el-table-column prop="row" label="Row" width="80" />
+        <el-table-column prop="message" label="Message" />
+      </el-table>
     </el-dialog>
   </div>
 </template>
@@ -149,7 +171,9 @@ import {
   createOutcome,
   updateOutcome,
   deleteOutcome,
-  updateOutcomeStatus
+  updateOutcomeStatus,
+  importOutcomes,
+  exportOutcomes
 } from '@/api/outcome'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { FormInstance } from 'element-plus'
@@ -171,6 +195,8 @@ const isEdit = ref(false)
 const currentId = ref<number | null>(null)
 const formRef = ref<FormInstance>()
 const saving = ref(false)
+const importing = ref(false)
+const importResult = ref<any | null>(null)
 
 const form = reactive({
   outcomeCode: '',
@@ -278,9 +304,34 @@ const handleDelete = (id: number) => {
   }).catch(() => {})
 }
 
-const handleExport = () => {
-  // In a real build, we redirect to API export endpoint
-  window.open('/api/outcomes/export', '_blank')
+const openImportDialog = () => {
+  importResult.value = null
+  importVisible.value = true
+}
+
+const handleImportUpload = async (options: any) => {
+  importing.value = true
+  try {
+    const result: any = await importOutcomes(options.file)
+    importResult.value = result
+    ElMessage.success(`导入完成：新增 ${result.createdCount} 条，更新 ${result.updatedCount} 条`)
+    loadOutcomes()
+    options.onSuccess?.(result)
+  } catch (e) {
+    options.onError?.(e)
+  } finally {
+    importing.value = false
+  }
+}
+
+const handleExport = async () => {
+  const blob: Blob = await exportOutcomes()
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'outcome_catalog.csv'
+  link.click()
+  URL.revokeObjectURL(url)
 }
 
 onMounted(() => {
@@ -314,10 +365,56 @@ onMounted(() => {
 }
 .table-card {
   padding: 20px;
+  max-width: 100%;
+  overflow-x: auto;
 }
 .pagination-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+.import-result,
+.import-errors {
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  .header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .header-actions :deep(.el-button) {
+    flex: 1 1 96px;
+    margin-left: 0;
+  }
+  .filter-bar {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .filter-input,
+  .filter-select {
+    width: 100%;
+  }
+  .table-card {
+    padding: 12px;
+  }
+  .pagination-wrapper {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+  :deep(.el-dialog__body) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  :deep(.el-form .el-col-12) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
 }
 </style>

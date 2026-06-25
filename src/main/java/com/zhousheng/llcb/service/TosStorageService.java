@@ -24,15 +24,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TosStorageService {
 
     private final TosProperties properties;
+    private final UploadProperties uploadProperties;
     private final SysFileMapper fileMapper;
 
-    public TosStorageService(TosProperties properties, SysFileMapper fileMapper) {
+    public TosStorageService(TosProperties properties,
+                             UploadProperties uploadProperties,
+                             SysFileMapper fileMapper) {
         this.properties = properties;
+        this.uploadProperties = uploadProperties;
         this.fileMapper = fileMapper;
     }
 
@@ -41,9 +47,10 @@ public class TosStorageService {
         if (file.isEmpty()) {
             throw new BusinessException("上传文件不能为空");
         }
+        validateFile(file);
         Credentials credentials = readCredentials();
-        String originalName = file.getOriginalFilename() == null ? "file" : file.getOriginalFilename();
-        String ext = FileUtil.extName(originalName);
+        String originalName = file.getOriginalFilename() == null ? "file" : FileUtil.getName(file.getOriginalFilename());
+        String ext = FileUtil.extName(originalName).toLowerCase(Locale.ROOT);
         String date = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         String objectKey = normalizePrefix(properties.prefix())
                 + normalizeBizType(bizType)
@@ -145,6 +152,36 @@ public class TosStorageService {
             return "";
         }
         return value.endsWith("/") ? value.substring(0, value.length() - 1) : value;
+    }
+
+    private void validateFile(MultipartFile file) {
+        long maxBytes = uploadProperties.maxBytes() > 0 ? uploadProperties.maxBytes() : 20L * 1024 * 1024;
+        if (file.getSize() > maxBytes) {
+            throw new BusinessException("上传文件超过大小限制");
+        }
+        String originalName = file.getOriginalFilename() == null ? "" : FileUtil.getName(file.getOriginalFilename());
+        String extension = FileUtil.extName(originalName).toLowerCase(Locale.ROOT);
+        Set<String> allowedExtensions = normalize(uploadProperties.allowedExtensions());
+        if (!allowedExtensions.isEmpty() && !allowedExtensions.contains(extension)) {
+            throw new BusinessException("不支持的文件扩展名");
+        }
+        String contentType = file.getContentType() == null ? "" : file.getContentType().toLowerCase(Locale.ROOT);
+        Set<String> allowedContentTypes = normalize(uploadProperties.allowedContentTypes());
+        if (!allowedContentTypes.isEmpty()
+                && !"application/octet-stream".equals(contentType)
+                && !allowedContentTypes.contains(contentType)) {
+            throw new BusinessException("不支持的文件类型");
+        }
+    }
+
+    private Set<String> normalize(List<String> values) {
+        if (values == null) {
+            return Set.of();
+        }
+        return values.stream()
+                .filter(StringUtils::hasText)
+                .map(value -> value.trim().toLowerCase(Locale.ROOT))
+                .collect(Collectors.toSet());
     }
 
     private record Credentials(String accessKey, String secretKey) {

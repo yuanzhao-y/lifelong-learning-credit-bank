@@ -2,6 +2,7 @@ package com.zhousheng.llcb.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,14 +20,16 @@ public final class BizDtos {
             String certificateNo,
             String issuingAuthority,
             LocalDate obtainedAt,
-            BigDecimal requestedCredit,
+            @DecimalMin(value = "0.01") BigDecimal requestedCredit,
             List<Long> materialFileIds) {
     }
 
     public record AuditRequest(BigDecimal recognizedCredit, String reason) {
     }
 
-    public record ConversionSubmitRequest(@NotNull Long ruleId, @NotNull Long sourceOutcomeId, @NotNull BigDecimal sourceCredit) {
+    public record ConversionSubmitRequest(@NotNull Long ruleId,
+                                          @NotNull Long sourceOutcomeId,
+                                          @NotNull @DecimalMin(value = "0.01") BigDecimal sourceCredit) {
     }
 
     public record ConversionPreviewResponse(Long ruleId, BigDecimal conversionRatio, BigDecimal targetCredit) {

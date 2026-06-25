@@ -43,7 +43,9 @@ public class MessageController {
 
     @GetMapping("/messages/{id}")
     public ApiResponse<SysMessage> detail(@PathVariable Long id) {
-        messageService.markRead(SecurityUtils.currentUserId(), id);
+        Long userId = SecurityUtils.currentUserId();
+        messageService.requireReceiver(userId, id);
+        messageService.markRead(userId, id);
         return ApiResponse.ok(messageMapper.selectById(id));
     }
 

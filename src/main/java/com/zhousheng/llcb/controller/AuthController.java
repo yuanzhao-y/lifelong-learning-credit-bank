@@ -3,11 +3,13 @@ package com.zhousheng.llcb.controller;
 import com.zhousheng.llcb.common.ApiResponse;
 import com.zhousheng.llcb.dto.AuthDtos;
 import com.zhousheng.llcb.entity.SysUser;
+import com.zhousheng.llcb.security.SecurityProperties;
 import com.zhousheng.llcb.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -15,9 +17,11 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final SecurityProperties securityProperties;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, SecurityProperties securityProperties) {
         this.authService = authService;
+        this.securityProperties = securityProperties;
     }
 
     @PostMapping("/register")
@@ -42,7 +46,12 @@ public class AuthController {
     public ApiResponse<Map<String, String>> issueSmsCode(@Valid @RequestBody AuthDtos.SmsCodeRequest request,
                                                          HttpServletRequest servletRequest) {
         String code = authService.issueSmsCode(request, RequestUtils.clientIp(servletRequest));
-        return ApiResponse.ok(Map.of("devCode", code, "message", "开发环境直接返回验证码，生产环境应接入短信网关"));
+        Map<String, String> result = new LinkedHashMap<>();
+        result.put("message", "verification code issued");
+        if (securityProperties.exposeDevSmsCode()) {
+            result.put("devCode", code);
+        }
+        return ApiResponse.ok(result);
     }
 
     @PostMapping("/password/reset")

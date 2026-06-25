@@ -3,20 +3,31 @@ package com.zhousheng.llcb.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhousheng.llcb.common.ApiResponse;
+import com.zhousheng.llcb.common.BusinessException;
+import com.zhousheng.llcb.common.CsvSecurity;
 import com.zhousheng.llcb.config.MybatisPlusConfig;
 import com.zhousheng.llcb.entity.*;
 import com.zhousheng.llcb.mapper.*;
 import com.zhousheng.llcb.service.RoleService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('admin')")
 public class AdminSystemController {
+
+    private static final int MAX_LOG_EXPORT_ROWS = 10_000;
 
     private final SysRoleMapper roleMapper;
     private final SysMenuMapper menuMapper;
@@ -181,14 +192,62 @@ public class AdminSystemController {
     public ApiResponse<Page<SysOperationLog>> logs(@RequestParam(defaultValue = "1") long page,
                                                    @RequestParam(defaultValue = "10") long size,
                                                    @RequestParam(required = false) Long operatorId,
-                                                   @RequestParam(required = false) String operationType) {
+                                                   @RequestParam(required = false) String operationType,
+                                                   @RequestParam(required = false)
+                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                                   LocalDateTime startTime,
+                                                   @RequestParam(required = false)
+                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                                   LocalDateTime endTime) {
         return ApiResponse.ok(operationLogMapper.selectPage(MybatisPlusConfig.page(page, size),
-                new LambdaQueryWrapper<SysOperationLog>()
-                        .eq(operatorId != null, SysOperationLog::getOperatorId, operatorId)
-                        .eq(StringUtils.hasText(operationType), SysOperationLog::getOperationType, operationType)
-                        .orderByDesc(SysOperationLog::getOperatedAt)));
+                operationLogQuery(operatorId, operationType, startTime, endTime)));
+    }
+
+    @GetMapping("/operation-logs/export")
+    public ResponseEntity<byte[]> exportLogs(@RequestParam(required = false) Long operatorId,
+                                             @RequestParam(required = false) String operationType,
+                                             @RequestParam(required = false)
+                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                             LocalDateTime startTime,
+                                             @RequestParam(required = false)
+                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                             LocalDateTime endTime) {
+        List<SysOperationLog> logs = operationLogMapper.selectList(
+                operationLogQuery(operatorId, operationType, startTime, endTime)
+                        .last("LIMIT " + (MAX_LOG_EXPORT_ROWS + 1)));
+        if (logs.size() > MAX_LOG_EXPORT_ROWS) {
+            throw new BusinessException("导出结果超过 10000 行，请缩小筛选范围");
+        }
+        StringBuilder builder = new StringBuilder("\uFEFFoperator_id,operator_name,module,operation_type,operation_content,ip_address,operated_at\n");
+        for (SysOperationLog log : logs) {
+            builder.append(CsvSecurity.cell(log.getOperatorId())).append(',')
+                    .append(CsvSecurity.cell(log.getOperatorName())).append(',')
+                    .append(CsvSecurity.cell(log.getModule())).append(',')
+                    .append(CsvSecurity.cell(log.getOperationType())).append(',')
+                    .append(CsvSecurity.cell(log.getOperationContent())).append(',')
+                    .append(CsvSecurity.cell(log.getIpAddress())).append(',')
+                    .append(CsvSecurity.cell(log.getOperatedAt())).append('\n');
+        }
+        String filename = "operation-logs-" + DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now()) + ".csv";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("text/csv;charset=UTF-8"))
+                .body(builder.toString().getBytes(StandardCharsets.UTF_8));
     }
 
     public record IdsRequest(List<Long> ids) {
     }
+
+    private LambdaQueryWrapper<SysOperationLog> operationLogQuery(Long operatorId,
+                                                                  String operationType,
+                                                                  LocalDateTime startTime,
+                                                                  LocalDateTime endTime) {
+        return new LambdaQueryWrapper<SysOperationLog>()
+                .eq(operatorId != null, SysOperationLog::getOperatorId, operatorId)
+                .eq(StringUtils.hasText(operationType), SysOperationLog::getOperationType, operationType)
+                .ge(startTime != null, SysOperationLog::getOperatedAt, startTime)
+                .le(endTime != null, SysOperationLog::getOperatedAt, endTime)
+                .orderByDesc(SysOperationLog::getOperatedAt);
+    }
+
 }

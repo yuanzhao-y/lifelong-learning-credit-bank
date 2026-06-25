@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { getToken } from '@/utils/auth'
+import { getToken, getUser } from '@/utils/auth'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -76,8 +76,15 @@ const router = createRouter({
 
 router.beforeEach((to, _from, next) => {
   const token = getToken()
+  const user = getUser()
+  const requiredRoles = to.matched.flatMap(record => (record.meta.roles as string[] | undefined) || [])
   if (to.meta.requiresAuth && !token) {
     next('/login')
+  } else if (requiredRoles.length > 0 && !requiredRoles.some(role => user?.roles?.includes(role))) {
+    if (user?.roles?.includes('admin')) next('/admin')
+    else if (user?.roles?.includes('auditor')) next('/auditor/cert/audit')
+    else if (user?.roles?.includes('expert')) next('/expert/reviews')
+    else next('/')
   } else if (to.meta.guest && token) {
     next('/')
   } else {

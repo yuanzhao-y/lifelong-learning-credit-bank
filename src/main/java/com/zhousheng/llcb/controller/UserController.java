@@ -3,6 +3,8 @@ package com.zhousheng.llcb.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhousheng.llcb.common.ApiResponse;
+import com.zhousheng.llcb.common.BusinessException;
+import com.zhousheng.llcb.common.Constants;
 import com.zhousheng.llcb.config.MybatisPlusConfig;
 import com.zhousheng.llcb.dto.AuthDtos;
 import com.zhousheng.llcb.dto.UserDtos;
@@ -75,6 +77,14 @@ public class UserController {
     @PreAuthorize("hasRole('admin')")
     public ApiResponse<Void> updateUserStatus(@PathVariable Long id, @RequestBody UserDtos.UserStatusRequest request) {
         SysUser user = userMapper.selectById(id);
+        if (user == null) {
+            throw new BusinessException(404, "用户不存在");
+        }
+        if (!Constants.STATUS_ENABLED.equals(request.status())
+                && !Constants.STATUS_DISABLED.equals(request.status())
+                && !"frozen".equals(request.status())) {
+            throw new BusinessException("用户状态不合法");
+        }
         user.setStatus(request.status());
         userMapper.updateById(user);
         return ApiResponse.ok();

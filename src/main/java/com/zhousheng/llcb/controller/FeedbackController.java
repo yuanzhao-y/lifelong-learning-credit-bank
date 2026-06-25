@@ -3,6 +3,7 @@ package com.zhousheng.llcb.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhousheng.llcb.common.ApiResponse;
+import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.config.MybatisPlusConfig;
 import com.zhousheng.llcb.dto.BizDtos;
 import com.zhousheng.llcb.entity.SysFeedback;
@@ -58,6 +59,9 @@ public class FeedbackController {
     @PreAuthorize("hasRole('admin')")
     public ApiResponse<Void> reply(@PathVariable Long id, @Valid @RequestBody BizDtos.FeedbackReplyRequest request) {
         SysFeedback feedback = feedbackMapper.selectById(id);
+        if (feedback == null) {
+            throw new BusinessException(404, "反馈不存在");
+        }
         feedback.setReplyContent(request.replyContent());
         feedback.setReplyAdminId(SecurityUtils.currentUserId());
         feedback.setRepliedAt(LocalDateTime.now());

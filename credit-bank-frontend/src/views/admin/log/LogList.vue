@@ -22,7 +22,7 @@
         value-format="YYYY-MM-DD"
       />
       <el-button type="primary" @click="loadLogs">筛选</el-button>
-      <el-button type="info" @click="handleExport">导出当前日志</el-button>
+      <el-button type="info" @click="handleExport">导出日志 CSV</el-button>
     </div>
 
     <!-- Table -->
@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { getOperationLogs } from '@/api/system'
+import { exportOperationLogs, getOperationLogs } from '@/api/system'
 import { formatDateTime } from '@/utils/format'
 import PageHeader from '@/components/PageHeader.vue'
 
@@ -92,36 +92,30 @@ const formatType = (type: string) => {
   return map[type] || type
 }
 
+const buildLogParams = (withPage = true) => {
+  const [startDate, endDate] = dateRange.value || []
+  return {
+    page: withPage ? query.page : undefined,
+    size: withPage ? query.size : undefined,
+    operatorId: query.operatorId || undefined,
+    operationType: query.operationType || undefined,
+    startTime: startDate ? `${startDate}T00:00:00` : undefined,
+    endTime: endDate ? `${endDate}T23:59:59` : undefined
+  }
+}
+
 const loadLogs = async () => {
   loading.value = true
   try {
-    const params = {
-      page: query.page,
-      size: query.size,
-      operatorId: query.operatorId || undefined,
-      operationType: query.operationType || undefined
-    }
-    const res: any = await getOperationLogs(params)
+    const res: any = await getOperationLogs(buildLogParams())
     logs.value = res.records || []
     total.value = res.total || 0
   } catch (e) {}
   loading.value = false
 }
 
-const handleExport = () => {
-  const rows = logs.value.map(item => [
-    item.operatorName || '',
-    item.module || '',
-    item.operationType || '',
-    item.operationContent || '',
-    item.ipAddress || '',
-    formatDateTime(item.operatedAt || item.createdAt)
-  ])
-  const csv = [
-    ['操作人', '业务模块', '操作类型', '详情', 'IP地址', '操作时间'],
-    ...rows
-  ].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n')
-  const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' })
+const handleExport = async () => {
+  const blob: Blob = await exportOperationLogs(buildLogParams(false))
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url

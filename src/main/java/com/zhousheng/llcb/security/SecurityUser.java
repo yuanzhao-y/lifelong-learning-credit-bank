@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Getter
@@ -13,6 +14,7 @@ public class SecurityUser implements UserDetails {
     private final String username;
     private final String password;
     private final String status;
+    private final LocalDateTime passwordUpdatedAt;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public SecurityUser(Long userId,
@@ -20,10 +22,20 @@ public class SecurityUser implements UserDetails {
                         String password,
                         String status,
                         Collection<? extends GrantedAuthority> authorities) {
+        this(userId, username, password, status, null, authorities);
+    }
+
+    public SecurityUser(Long userId,
+                        String username,
+                        String password,
+                        String status,
+                        LocalDateTime passwordUpdatedAt,
+                        Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.status = status;
+        this.passwordUpdatedAt = passwordUpdatedAt;
         this.authorities = authorities;
     }
 

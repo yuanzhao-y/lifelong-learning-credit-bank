@@ -1,6 +1,7 @@
 package com.zhousheng.llcb.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.common.Constants;
 import com.zhousheng.llcb.dto.BizDtos;
@@ -51,6 +52,7 @@ public class ConversionService {
     }
 
     public BizDtos.ConversionPreviewResponse preview(Long ruleId, Long sourceOutcomeId, BigDecimal sourceCredit) {
+        requirePositive(sourceCredit);
         LearnerOutcome source = ownOutcome(sourceOutcomeId);
         ConversionRule rule = usableRule(ruleId);
         if (!rule.getSourceCatalogId().equals(source.getCatalogId())) {
@@ -65,6 +67,7 @@ public class ConversionService {
 
     @Transactional
     public ConversionApplication submit(BizDtos.ConversionSubmitRequest request) {
+        requirePositive(request.sourceCredit());
         Long userId = SecurityUtils.currentUserId();
         LearnerOutcome source = ownOutcome(request.sourceOutcomeId());
         ConversionRule rule = usableRule(request.ruleId());
@@ -96,13 +99,7 @@ public class ConversionService {
 
     @Transactional
     public void approve(Long applicationId) {
-        ConversionApplication application = applicationMapper.selectById(applicationId);
-        if (application == null) {
-            throw new BusinessException("转换申请不存在");
-        }
-        if (!Constants.STATUS_PENDING.equals(application.getStatus())) {
-            throw new BusinessException("转换申请已处理");
-        }
+        ConversionApplication application = claimPending(applicationId);
         LearnerOutcome source = outcomeMapper.selectById(application.getSourceOutcomeId());
         String from = application.getStatus();
         CreditFlow deductFlow = creditService.deductFrozen(source, application.getSourceCredit(),
@@ -150,13 +147,7 @@ public class ConversionService {
 
     @Transactional
     public void reject(Long applicationId, String reason) {
-        ConversionApplication application = applicationMapper.selectById(applicationId);
-        if (application == null) {
-            throw new BusinessException("转换申请不存在");
-        }
-        if (!Constants.STATUS_PENDING.equals(application.getStatus())) {
-            throw new BusinessException("转换申请已处理");
-        }
+        ConversionApplication application = claimPending(applicationId);
         LearnerOutcome source = outcomeMapper.selectById(application.getSourceOutcomeId());
         creditService.unfreeze(source, application.getSourceCredit(),
                 "conversion_application", application.getId(), "转换审核驳回解冻源学分");
@@ -189,5 +180,28 @@ public class ConversionService {
             throw new BusinessException("转换规则不存在或未生效");
         }
         return rule;
+    }
+
+    private ConversionApplication claimPending(Long applicationId) {
+        ConversionApplication application = applicationMapper.selectById(applicationId);
+        if (application == null) {
+            throw new BusinessException("转换申请不存在");
+        }
+        int updated = applicationMapper.update(null, new UpdateWrapper<ConversionApplication>()
+                .eq("id", applicationId)
+                .eq("status", Constants.STATUS_PENDING)
+                .set("status", "processing")
+                .set("audit_user_id", SecurityUtils.currentUserId())
+                .set("audited_at", LocalDateTime.now()));
+        if (updated == 0) {
+            throw new BusinessException("转换申请已被其他审核员处理");
+        }
+        return application;
+    }
+
+    private void requirePositive(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new BusinessException("源学分必须大于 0");
+        }
     }
 }

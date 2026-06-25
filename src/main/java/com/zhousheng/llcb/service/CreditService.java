@@ -1,6 +1,7 @@
 package com.zhousheng.llcb.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.entity.CreditAccount;
 import com.zhousheng.llcb.entity.CreditFlow;
@@ -49,6 +50,7 @@ public class CreditService {
 
     @Transactional
     public CreditFlow earn(Long userId, Long learnerOutcomeId, BigDecimal amount, String bizType, Long bizId, String description) {
+        requirePositive(amount);
         CreditAccount account = getOrCreateAccount(userId);
         BigDecimal balanceBefore = nvl(account.getBalance());
         BigDecimal frozenBefore = nvl(account.getFrozenCredit());
@@ -60,6 +62,7 @@ public class CreditService {
 
     @Transactional
     public CreditFlow freeze(LearnerOutcome outcome, BigDecimal amount, String bizType, Long bizId, String description) {
+        requirePositive(amount);
         if (nvl(outcome.getAvailableCredit()).compareTo(amount) < 0) {
             throw new BusinessException("可用学分不足");
         }
@@ -73,29 +76,50 @@ public class CreditService {
         account.setFrozenCredit(frozenBefore.add(amount));
         updateAccountOrThrow(account);
 
+        int outcomeUpdated = outcomeMapper.update(null, new UpdateWrapper<LearnerOutcome>()
+                .eq("id", outcome.getId())
+                .eq("user_id", outcome.getUserId())
+                .ge("available_credit", amount)
+                .setSql("available_credit = available_credit - " + amount.toPlainString())
+                .setSql("frozen_credit = frozen_credit + " + amount.toPlainString()));
+        if (outcomeUpdated == 0) {
+            throw new BusinessException("学习成果学分被并发修改，请重试");
+        }
         outcome.setAvailableCredit(nvl(outcome.getAvailableCredit()).subtract(amount));
         outcome.setFrozenCredit(nvl(outcome.getFrozenCredit()).add(amount));
-        outcomeMapper.updateById(outcome);
         return flow(account, outcome.getId(), bizType, bizId, "freeze", amount, balanceBefore, account.getBalance(), frozenBefore, account.getFrozenCredit(), description);
     }
 
     @Transactional
     public CreditFlow unfreeze(LearnerOutcome outcome, BigDecimal amount, String bizType, Long bizId, String description) {
+        requirePositive(amount);
         CreditAccount account = getOrCreateAccount(outcome.getUserId());
+        if (nvl(account.getFrozenCredit()).compareTo(amount) < 0 || nvl(outcome.getFrozenCredit()).compareTo(amount) < 0) {
+            throw new BusinessException("冻结学分不足");
+        }
         BigDecimal balanceBefore = nvl(account.getBalance());
         BigDecimal frozenBefore = nvl(account.getFrozenCredit());
         account.setBalance(balanceBefore.add(amount));
         account.setFrozenCredit(frozenBefore.subtract(amount));
         updateAccountOrThrow(account);
 
+        int outcomeUpdated = outcomeMapper.update(null, new UpdateWrapper<LearnerOutcome>()
+                .eq("id", outcome.getId())
+                .eq("user_id", outcome.getUserId())
+                .ge("frozen_credit", amount)
+                .setSql("available_credit = available_credit + " + amount.toPlainString())
+                .setSql("frozen_credit = frozen_credit - " + amount.toPlainString()));
+        if (outcomeUpdated == 0) {
+            throw new BusinessException("学习成果学分被并发修改，请重试");
+        }
         outcome.setAvailableCredit(nvl(outcome.getAvailableCredit()).add(amount));
         outcome.setFrozenCredit(nvl(outcome.getFrozenCredit()).subtract(amount));
-        outcomeMapper.updateById(outcome);
         return flow(account, outcome.getId(), bizType, bizId, "unfreeze", amount, balanceBefore, account.getBalance(), frozenBefore, account.getFrozenCredit(), description);
     }
 
     @Transactional
     public CreditFlow deductFrozen(LearnerOutcome outcome, BigDecimal amount, String bizType, Long bizId, String description) {
+        requirePositive(amount);
         CreditAccount account = getOrCreateAccount(outcome.getUserId());
         if (nvl(account.getFrozenCredit()).compareTo(amount) < 0 || nvl(outcome.getFrozenCredit()).compareTo(amount) < 0) {
             throw new BusinessException("冻结学分不足");
@@ -106,9 +130,18 @@ public class CreditService {
         account.setTotalDeducted(nvl(account.getTotalDeducted()).add(amount));
         updateAccountOrThrow(account);
 
+        int outcomeUpdated = outcomeMapper.update(null, new UpdateWrapper<LearnerOutcome>()
+                .eq("id", outcome.getId())
+                .eq("user_id", outcome.getUserId())
+                .ge("frozen_credit", amount)
+                .ge("total_credit", amount)
+                .setSql("frozen_credit = frozen_credit - " + amount.toPlainString())
+                .setSql("total_credit = total_credit - " + amount.toPlainString()));
+        if (outcomeUpdated == 0) {
+            throw new BusinessException("学习成果学分被并发修改，请重试");
+        }
         outcome.setFrozenCredit(nvl(outcome.getFrozenCredit()).subtract(amount));
         outcome.setTotalCredit(nvl(outcome.getTotalCredit()).subtract(amount));
-        outcomeMapper.updateById(outcome);
         return flow(account, outcome.getId(), bizType, bizId, "deduct", amount, balanceBefore, balanceBefore, frozenBefore, account.getFrozenCredit(), description);
     }
 
@@ -149,5 +182,11 @@ public class CreditService {
 
     private BigDecimal nvl(BigDecimal value) {
         return value == null ? BigDecimal.ZERO : value;
+    }
+
+    private void requirePositive(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new BusinessException("学分数量必须大于 0");
+        }
     }
 }

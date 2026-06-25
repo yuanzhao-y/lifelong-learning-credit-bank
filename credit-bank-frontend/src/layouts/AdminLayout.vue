@@ -156,11 +156,15 @@
         </div>
       </div>
     </aside>
+    <div v-if="isCollapsed" class="sidebar-overlay" @click="isCollapsed = false" />
 
     <!-- Main -->
     <div class="main-container" :class="{ expanded: isCollapsed }">
       <header class="main-header">
         <div class="header-left">
+          <button class="mobile-menu-btn" type="button" aria-label="打开导航菜单" @click="isCollapsed = true">
+            <el-icon :size="20"><Menu /></el-icon>
+          </button>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/admin' }">管理中心</el-breadcrumb-item>
             <el-breadcrumb-item v-for="item in breadcrumbs" :key="item.path">
@@ -205,7 +209,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
@@ -227,6 +231,10 @@ const breadcrumbs = computed(() => {
   return route.matched
     .filter(r => r.meta?.title)
     .map(r => ({ path: r.path, title: r.meta.title as string }))
+})
+
+watch(() => route.path, () => {
+  if (window.innerWidth <= 768) isCollapsed.value = false
 })
 
 const goHome = () => {
@@ -252,6 +260,8 @@ const handleCommand = async (cmd: string) => {
 .layout-container {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background: transparent;
 }
 
@@ -396,6 +406,7 @@ const handleCommand = async (cmd: string) => {
 
 .main-container {
   flex: 1;
+  min-width: 0;
   margin-left: 260px;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -421,6 +432,24 @@ const handleCommand = async (cmd: string) => {
 
 .header-left :deep(.el-breadcrumb__inner) { color: #94a3b8 !important; }
 .header-left :deep(.el-breadcrumb__separator) { color: #475569 !important; }
+.header-left { display: flex; align-items: center; min-width: 0; gap: 8px; }
+
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.sidebar-overlay { display: none; }
 
 .header-right { display: flex; align-items: center; gap: 8px; }
 
@@ -455,7 +484,12 @@ const handleCommand = async (cmd: string) => {
 .dropdown-username { font-size: 14px; color: #f1f5f9; font-weight: 500; }
 .dropdown-arrow { color: #64748b; font-size: 12px; }
 
-.main-content { flex: 1; padding: 24px; }
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+  overflow-x: hidden;
+}
 
 .fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
@@ -467,7 +501,38 @@ const handleCommand = async (cmd: string) => {
 .fade-slide-leave-to { opacity: 0; transform: translateY(-8px); }
 
 @media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); z-index: 200; }
-  .main-container { margin-left: 0 !important; }
+  .sidebar {
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 200;
+  }
+  .sidebar.collapsed {
+    width: 260px;
+    transform: translateX(0);
+  }
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    background: rgba(2, 6, 23, 0.64);
+  }
+  .main-container {
+    width: 100%;
+    margin-left: 0 !important;
+    overflow-x: hidden;
+  }
+  .main-header { padding: 0 12px; }
+  .mobile-menu-btn { display: flex; }
+  .header-left { overflow: hidden; }
+  .header-left :deep(.el-breadcrumb) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .dropdown-username { display: none; }
+  .user-dropdown-trigger { padding-right: 4px; }
+  .main-content { padding: 16px 12px; }
 }
 </style>

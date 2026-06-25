@@ -3,6 +3,7 @@ package com.zhousheng.llcb.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhousheng.llcb.common.ApiResponse;
+import com.zhousheng.llcb.common.BusinessException;
 import com.zhousheng.llcb.config.MybatisPlusConfig;
 import com.zhousheng.llcb.dto.BizDtos;
 import com.zhousheng.llcb.entity.BizAuditRecord;
@@ -59,6 +60,7 @@ public class CertificationController {
 
     @GetMapping("/{id}/audit-records")
     public ApiResponse<List<BizAuditRecord>> auditRecords(@PathVariable Long id) {
+        assertCanViewApplication(id);
         return ApiResponse.ok(auditRecordMapper.selectList(new LambdaQueryWrapper<BizAuditRecord>()
                 .eq(BizAuditRecord::getBizType, "cert_application")
                 .eq(BizAuditRecord::getBizId, id)
@@ -98,5 +100,15 @@ public class CertificationController {
     public ApiResponse<Void> batchApprove(@RequestBody AdminSystemController.IdsRequest request) {
         certificationService.batchApprove(request.ids());
         return ApiResponse.ok();
+    }
+
+    private void assertCanViewApplication(Long id) {
+        if (SecurityUtils.hasRole("admin") || SecurityUtils.hasRole("auditor")) {
+            return;
+        }
+        CertApplication application = applicationMapper.selectById(id);
+        if (application == null || !SecurityUtils.currentUserId().equals(application.getApplicantId())) {
+            throw new BusinessException(404, "认证申请不存在");
+        }
     }
 }

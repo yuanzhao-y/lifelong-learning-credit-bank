@@ -50,6 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(SysRole::getRoleCode)
                 .map(roleCode -> new SimpleGrantedAuthority("ROLE_" + roleCode))
                 .toList();
-        return new SecurityUser(user.getId(), user.getUsername(), user.getPasswordHash(), user.getStatus(), authorities);
+        return new SecurityUser(user.getId(), user.getUsername(), user.getPasswordHash(), user.getStatus(),
+                user.getPasswordUpdatedAt(), authorities);
     }
 }
