@@ -1,0 +1,595 @@
+{
+  "metadata": {
+    "suite": "LLCB API integration, security and concurrency audit",
+    "executedAt": "2026-06-25T02:03:54.302Z",
+    "baseUrl": "http://127.0.0.1/api",
+    "testDataPrefix": "qa_"
+  },
+  "summary": {
+    "total": 58,
+    "passed": 58,
+    "failed": 0
+  },
+  "results": [
+    {
+      "id": "IT-ENV-02",
+      "requirement": "ENV",
+      "description": "Direct backend health",
+      "expected": "200/UP",
+      "actual": "200/UP",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:49.228Z"
+    },
+    {
+      "id": "IT-ENV-03",
+      "requirement": "ENV",
+      "description": "Nginx health proxy",
+      "expected": "200/UP",
+      "actual": "200/UP",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:49.237Z"
+    },
+    {
+      "id": "IT-ENV-04",
+      "requirement": "ENV",
+      "description": "OpenAPI document",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:49.951Z"
+    },
+    {
+      "id": "BB-01-01A",
+      "requirement": "FR-01",
+      "description": "admin password login",
+      "expected": "HTTP 200 and expected role",
+      "actual": "HTTP 200; roles=admin",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:50.149Z"
+    },
+    {
+      "id": "BB-01-01L",
+      "requirement": "FR-01",
+      "description": "learner password login",
+      "expected": "HTTP 200 and expected role",
+      "actual": "HTTP 200; roles=learner",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:50.243Z"
+    },
+    {
+      "id": "BB-01-01U",
+      "requirement": "FR-01",
+      "description": "auditor password login",
+      "expected": "HTTP 200 and expected role",
+      "actual": "HTTP 200; roles=auditor",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:50.339Z"
+    },
+    {
+      "id": "BB-01-01E",
+      "requirement": "FR-01",
+      "description": "expert password login",
+      "expected": "HTTP 200 and expected role",
+      "actual": "HTTP 200; roles=expert",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:50.440Z"
+    },
+    {
+      "id": "IT-AUTH-04",
+      "requirement": "FR-01",
+      "description": "Protected endpoint without token",
+      "expected": "401",
+      "actual": 401,
+      "status": "PASS",
+      "details": "authentication required",
+      "executedAt": "2026-06-25T02:03:50.448Z"
+    },
+    {
+      "id": "IT-RBAC-02",
+      "requirement": "FR-03",
+      "description": "Learner calls administrator API",
+      "expected": "403",
+      "actual": 403,
+      "status": "PASS",
+      "details": "无权访问该资源",
+      "executedAt": "2026-06-25T02:03:50.481Z"
+    },
+    {
+      "id": "IT-SEC-04A",
+      "requirement": "SEC",
+      "description": "Reject untrusted CORS origin",
+      "expected": "403 and no ACAO",
+      "actual": "403; ACAO=none",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:50.509Z"
+    },
+    {
+      "id": "IT-SEC-04B",
+      "requirement": "SEC",
+      "description": "Security response headers",
+      "expected": "nosniff/DENY/no-referrer",
+      "actual": "nosniff/DENY/no-referrer",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:50.509Z"
+    },
+    {
+      "id": "BB-02-01",
+      "requirement": "FR-02",
+      "description": "Learner profile",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.546Z"
+    },
+    {
+      "id": "BB-03-01",
+      "requirement": "FR-03",
+      "description": "Administrator role list",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.576Z"
+    },
+    {
+      "id": "BB-04-01",
+      "requirement": "FR-04",
+      "description": "Outcome catalog management list",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.644Z"
+    },
+    {
+      "id": "BB-05-05",
+      "requirement": "FR-05",
+      "description": "Certification application history",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.674Z"
+    },
+    {
+      "id": "BB-06-01",
+      "requirement": "FR-06",
+      "description": "Certification audit queue",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.710Z"
+    },
+    {
+      "id": "BB-07-01",
+      "requirement": "FR-07",
+      "description": "Credit account",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.737Z"
+    },
+    {
+      "id": "BB-08-01",
+      "requirement": "FR-08",
+      "description": "Conversion rule management",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.766Z"
+    },
+    {
+      "id": "BB-09-05",
+      "requirement": "FR-09",
+      "description": "Conversion application history",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.793Z"
+    },
+    {
+      "id": "BB-10-01",
+      "requirement": "FR-10",
+      "description": "Conversion audit queue",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.824Z"
+    },
+    {
+      "id": "BB-11-03",
+      "requirement": "FR-11",
+      "description": "Expert review queue",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.862Z"
+    },
+    {
+      "id": "BB-12-01",
+      "requirement": "FR-12",
+      "description": "Statistics overview",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.894Z"
+    },
+    {
+      "id": "BB-13-01",
+      "requirement": "FR-13",
+      "description": "Learner messages",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.937Z"
+    },
+    {
+      "id": "BB-14-01",
+      "requirement": "FR-14",
+      "description": "Operation logs",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.966Z"
+    },
+    {
+      "id": "BB-15-01",
+      "requirement": "FR-15",
+      "description": "Dictionary management",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:50.996Z"
+    },
+    {
+      "id": "BB-16-01",
+      "requirement": "FR-16",
+      "description": "Public outcome browse",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.015Z"
+    },
+    {
+      "id": "BB-17-01",
+      "requirement": "FR-17",
+      "description": "Public conversion rules",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.032Z"
+    },
+    {
+      "id": "BB-18-01",
+      "requirement": "FR-18",
+      "description": "Learner education archive",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.058Z"
+    },
+    {
+      "id": "BB-19-01",
+      "requirement": "FR-19",
+      "description": "Public announcements",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.132Z"
+    },
+    {
+      "id": "BB-20-01",
+      "requirement": "FR-20",
+      "description": "Learner feedback history",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.158Z"
+    },
+    {
+      "id": "SEC-INJECT-01",
+      "requirement": "SEC",
+      "description": "SQL injection-shaped search input",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.181Z"
+    },
+    {
+      "id": "SEC-INJECT-01B",
+      "requirement": "SEC",
+      "description": "Search result remains paginated",
+      "expected": "records <= 5",
+      "actual": 0,
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:51.181Z"
+    },
+    {
+      "id": "UT-AUTH-04-API",
+      "requirement": "FR-01",
+      "description": "Weak password registration",
+      "expected": "400",
+      "actual": 400,
+      "status": "PASS",
+      "details": "密码必须为 8-64 位，并包含大小写字母、数字和特殊字符",
+      "executedAt": "2026-06-25T02:03:51.202Z"
+    },
+    {
+      "id": "IT-SEC-LOGIN-RATE",
+      "requirement": "SEC",
+      "description": "Login brute-force throttling",
+      "expected": "five 400 then 429",
+      "actual": "400,400,400,400,400,429",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:51.314Z"
+    },
+    {
+      "id": "IT-SEC-SMS-RATE",
+      "requirement": "SEC",
+      "description": "SMS code request throttling",
+      "expected": "200 then 429",
+      "actual": "200,429",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:51.418Z"
+    },
+    {
+      "id": "IT-AUTH-01",
+      "requirement": "FR-01",
+      "description": "Create isolated QA learner",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.515Z"
+    },
+    {
+      "id": "IT-AUTH-02",
+      "requirement": "FR-01",
+      "description": "learner password login",
+      "expected": "HTTP 200 and expected role",
+      "actual": "HTTP 200; roles=learner",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:51.602Z"
+    },
+    {
+      "id": "BB-02-03",
+      "requirement": "FR-02",
+      "description": "Change password",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.760Z"
+    },
+    {
+      "id": "IT-SEC-03",
+      "requirement": "SEC",
+      "description": "Old JWT after password change",
+      "expected": "401",
+      "actual": 401,
+      "status": "PASS",
+      "details": "authentication required",
+      "executedAt": "2026-06-25T02:03:51.767Z"
+    },
+    {
+      "id": "IT-AUTH-02B",
+      "requirement": "FR-01",
+      "description": "learner password login",
+      "expected": "HTTP 200 and expected role",
+      "actual": "HTTP 200; roles=learner",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:51.842Z"
+    },
+    {
+      "id": "BB-18-02",
+      "requirement": "FR-18",
+      "description": "Create education experience",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.875Z"
+    },
+    {
+      "id": "IT-SEC-02P",
+      "requirement": "SEC",
+      "description": "Horizontal update of education experience",
+      "expected": "404",
+      "actual": 404,
+      "status": "PASS",
+      "details": "教育经历不存在",
+      "executedAt": "2026-06-25T02:03:51.898Z"
+    },
+    {
+      "id": "IT-SEC-02M",
+      "requirement": "SEC",
+      "description": "Horizontal read of another user's message",
+      "expected": "404",
+      "actual": 404,
+      "status": "PASS",
+      "details": "消息不存在",
+      "executedAt": "2026-06-25T02:03:51.948Z"
+    },
+    {
+      "id": "IT-XSS-01",
+      "requirement": "FR-19",
+      "description": "Create announcement containing unsafe HTML",
+      "expected": "200",
+      "actual": 200,
+      "status": "PASS",
+      "details": "success",
+      "executedAt": "2026-06-25T02:03:51.988Z"
+    },
+    {
+      "id": "IT-XSS-02",
+      "requirement": "SEC",
+      "description": "Public announcement HTML is sanitized",
+      "expected": "safe paragraph without script/event handler",
+      "actual": "<p>safe</p>",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.024Z"
+    },
+    {
+      "id": "IT-CSV-01A",
+      "requirement": "FR-04",
+      "description": "CSV BOM/quoted newline/invalid formula row",
+      "expected": "created=1 skipped=1",
+      "actual": "HTTP 200; created=1; skipped=1",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.124Z"
+    },
+    {
+      "id": "IT-CSV-01B",
+      "requirement": "FR-04",
+      "description": "Repeated outcome code updates existing row",
+      "expected": "updated=1 skipped=1",
+      "actual": "HTTP 200; updated=1; skipped=1",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.152Z"
+    },
+    {
+      "id": "IT-CSV-02",
+      "requirement": "FR-04",
+      "description": "CSV row limit",
+      "expected": "HTTP 400",
+      "actual": 400,
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.235Z"
+    },
+    {
+      "id": "BB-04-05",
+      "requirement": "FR-04",
+      "description": "Outcome catalog export",
+      "expected": "CSV attachment with data",
+      "actual": "HTTP 200; bytes=1786",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.269Z"
+    },
+    {
+      "id": "IT-CSV-03",
+      "requirement": "FR-14",
+      "description": "Filtered operation log export",
+      "expected": "UTF-8 BOM CSV attachment",
+      "actual": "HTTP 200; bytes=1310",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.295Z"
+    },
+    {
+      "id": "IT-FILE-01",
+      "requirement": "FR-05",
+      "description": "Reject forged upload type and extension",
+      "expected": "HTTP 400",
+      "actual": 400,
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:52.323Z"
+    },
+    {
+      "id": "IT-TOS-01",
+      "requirement": "FR-05",
+      "description": "Valid TOS upload and object read",
+      "expected": "upload 200 and object 200",
+      "actual": "upload=200; objectReachable=true",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:53.700Z"
+    },
+    {
+      "id": "IT-SEC-02C",
+      "requirement": "SEC",
+      "description": "Horizontal read of certification audit trail",
+      "expected": "404",
+      "actual": 404,
+      "status": "PASS",
+      "details": "认证申请不存在",
+      "executedAt": "2026-06-25T02:03:53.790Z"
+    },
+    {
+      "id": "IT-CONC-01",
+      "requirement": "FR-06",
+      "description": "Ten concurrent certification approvals",
+      "expected": "one success and nine rejected",
+      "actual": "success=1; rejected=9",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:53.864Z"
+    },
+    {
+      "id": "IT-IDEMP-01",
+      "requirement": "FR-06",
+      "description": "Repeated certification approval",
+      "expected": "HTTP 400",
+      "actual": 400,
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:53.894Z"
+    },
+    {
+      "id": "IT-CONC-03",
+      "requirement": "FR-06",
+      "description": "Withdraw versus approval race",
+      "expected": "exactly one succeeds",
+      "actual": "200,400",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:53.983Z"
+    },
+    {
+      "id": "IT-CONC-02",
+      "requirement": "FR-10",
+      "description": "Ten concurrent conversion approvals",
+      "expected": "one success and nine rejected",
+      "actual": "success=1; rejected=9",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:54.279Z"
+    },
+    {
+      "id": "IT-IDEMP-02",
+      "requirement": "FR-10",
+      "description": "Repeated conversion approval",
+      "expected": "HTTP 400",
+      "actual": 400,
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T02:03:54.302Z"
+    }
+  ]
+}

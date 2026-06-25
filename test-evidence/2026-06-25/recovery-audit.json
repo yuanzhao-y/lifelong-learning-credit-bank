@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "executedAt": "2026-06-25T02:35:02.489Z",
+    "destructiveVolumeReset": false
+  },
+  "before": {
+    "database": {
+      "users": "23",
+      "credit_flows": "34",
+      "conversion_transactions": "7",
+      "operation_logs": "25098"
+    },
+    "jenkins": [
+      "/var/jenkins_home/jobs/llcb-backend-ci/builds",
+      "/var/jenkins_home/jobs/llcb-backend-ci/nextBuildNumber"
+    ],
+    "volumes": [
+      "lifelong-learning-credit-bank_jenkins-home",
+      "lifelong-learning-credit-bank_mysql-data",
+      "lifelong-learning-credit-bank_redis-data"
+    ]
+  },
+  "after": {
+    "database": {
+      "users": "23",
+      "credit_flows": "34",
+      "conversion_transactions": "7",
+      "operation_logs": "25098"
+    },
+    "jenkins": [
+      "/var/jenkins_home/jobs/llcb-backend-ci/builds",
+      "/var/jenkins_home/jobs/llcb-backend-ci/nextBuildNumber"
+    ],
+    "redisPing": "PONG"
+  },
+  "checks": {
+    "dependenciesRecovered": true,
+    "directHealthRecovered": true,
+    "proxyHealthRecovered": true,
+    "databaseCountsPreserved": true,
+    "jenkinsStatePreserved": true,
+    "redisRecovered": true,
+    "persistentVolumesPresent": true
+  },
+  "passed": true
+}

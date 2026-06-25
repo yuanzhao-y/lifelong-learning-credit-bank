@@ -1,0 +1,33 @@
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+Creating summariser <summary>
+Created the tree successfully using C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank\scripts\qa\performance-test.jmx
+Starting standalone test @ 2026 Jun 25 10:11:34 CST (1782353494547)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+summary +      1 in 00:00:01 =    0.9/s Avg:    48 Min:    48 Max:    48 Err:     0 (0.00%) Active: 2 Started: 2 Finished: 0
+summary +    315 in 00:00:24 =   13.0/s Avg:    21 Min:    13 Max:    96 Err:     0 (0.00%) Active: 26 Started: 26 Finished: 0
+summary =    316 in 00:00:25 =   12.4/s Avg:    21 Min:    13 Max:    96 Err:     0 (0.00%)
+summary +    870 in 00:00:30 =   28.6/s Avg:    20 Min:    12 Max:    68 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   1186 in 00:00:56 =   21.2/s Avg:    20 Min:    12 Max:    96 Err:     0 (0.00%)
+summary +    870 in 00:00:30 =   29.1/s Avg:    21 Min:    11 Max:    63 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   2056 in 00:01:26 =   24.0/s Avg:    20 Min:    11 Max:    96 Err:     0 (0.00%)
+summary +    870 in 00:00:30 =   29.1/s Avg:    22 Min:    11 Max:    63 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   2926 in 00:01:56 =   25.3/s Avg:    21 Min:    11 Max:    96 Err:     0 (0.00%)
+summary +    875 in 00:00:30 =   29.4/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   3801 in 00:02:25 =   26.1/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+summary +    888 in 00:00:30 =   29.6/s Avg:    21 Min:    11 Max:    68 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   4689 in 00:02:55 =   26.7/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+summary +    873 in 00:00:30 =   28.9/s Avg:    22 Min:    13 Max:    49 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   5562 in 00:03:26 =   27.1/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+summary +    870 in 00:00:30 =   29.1/s Avg:    21 Min:    10 Max:    47 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   6432 in 00:03:55 =   27.3/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+summary +    874 in 00:00:30 =   28.8/s Avg:    22 Min:    12 Max:    47 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   7306 in 00:04:26 =   27.5/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+summary +    870 in 00:00:30 =   29.2/s Avg:    21 Min:    12 Max:    52 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =   8176 in 00:04:56 =   27.7/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+summary +    145 in 00:00:04 =   33.9/s Avg:    20 Min:    11 Max:    34 Err:     0 (0.00%) Active: 0 Started: 30 Finished: 30
+summary =   8321 in 00:05:00 =   27.7/s Avg:    21 Min:     9 Max:   104 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Jun 25 10:16:34 CST (1782353794540)
+... end of run

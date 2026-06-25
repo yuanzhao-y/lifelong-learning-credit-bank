@@ -1,0 +1,16 @@
+LLCB database audit
+Executed: 2026-06-25T03:23:17.825Z
+
+users	23
+qa_users	15
+credit_flows	34
+conversion_transactions	7
+operation_logs	25136
+negative_credit_accounts	0
+duplicate_certification_outcomes	0
+duplicate_conversion_transactions	0
+stale_processing_certifications	0
+stale_processing_conversions	0
+1	SIMPLE	cert_application	NULL	ref	idx_cert_app_applicant	idx_cert_app_applicant	8	const	1	100.00	Backward index scan
+1	SIMPLE	conversion_application	NULL	ref	idx_conversion_app_query	idx_conversion_app_query	130	const	1	100.00	NULL
+1	SIMPLE	credit_flow	NULL	ref	idx_credit_flow_user_time,idx_credit_flow_user_type	idx_credit_flow_user_time	8	const	1	100.00	Backward index scan

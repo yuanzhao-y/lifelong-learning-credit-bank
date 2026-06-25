@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "tool": "Apache JMeter 5.6.3",
+    "executedAt": "2026-06-25T02:21:48.028Z",
+    "gateway": "http://127.0.0.1"
+  },
+  "summaries": [
+    {
+      "id": "ST-PERF-03",
+      "scenario": "public-outcome-query",
+      "threads": 30,
+      "rampSeconds": 30,
+      "durationSeconds": 300,
+      "pacingMilliseconds": 1000,
+      "requests": 8325,
+      "failures": 0,
+      "errorRatePercent": 0,
+      "averageMilliseconds": 20,
+      "p90Milliseconds": 26,
+      "p95Milliseconds": 31,
+      "p99Milliseconds": 45,
+      "maxMilliseconds": 94,
+      "throughputPerSecond": 27.89,
+      "responseCodes": [
+        "200"
+      ],
+      "thresholdMilliseconds": 500,
+      "passed": true
+    },
+    {
+      "id": "ST-PERF-04",
+      "scenario": "authenticated-credit-account",
+      "threads": 30,
+      "rampSeconds": 30,
+      "durationSeconds": 300,
+      "pacingMilliseconds": 1000,
+      "requests": 8321,
+      "failures": 0,
+      "errorRatePercent": 0,
+      "averageMilliseconds": 21.57,
+      "p90Milliseconds": 29,
+      "p95Milliseconds": 33,
+      "p99Milliseconds": 47,
+      "maxMilliseconds": 104,
+      "throughputPerSecond": 27.84,
+      "responseCodes": [
+        "200"
+      ],
+      "thresholdMilliseconds": 500,
+      "passed": true
+    },
+    {
+      "id": "ST-PERF-05",
+      "scenario": "password-login",
+      "threads": 30,
+      "rampSeconds": 30,
+      "durationSeconds": 300,
+      "pacingMilliseconds": 1000,
+      "requests": 7760,
+      "failures": 0,
+      "errorRatePercent": 0,
+      "averageMilliseconds": 93.83,
+      "p90Milliseconds": 120,
+      "p95Milliseconds": 131,
+      "p99Milliseconds": 156,
+      "maxMilliseconds": 213,
+      "throughputPerSecond": 26.02,
+      "responseCodes": [
+        "200"
+      ],
+      "thresholdMilliseconds": 1000,
+      "passed": true
+    }
+  ]
+}
