@@ -1,0 +1,15 @@
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+Creating summariser <summary>
+Created the tree successfully using C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank\scripts\qa\performance-test.jmx
+Starting standalone test @ 2026 Jun 25 16:02:19 CST (1782374539462)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+summary +     79 in 00:00:10 =    7.5/s Avg:    23 Min:    16 Max:   137 Err:     0 (0.00%) Active: 16 Started: 16 Finished: 0
+summary +    808 in 00:00:30 =   26.8/s Avg:    19 Min:    13 Max:    45 Err:     0 (0.00%) Active: 30 Started: 30 Finished: 0
+summary =    887 in 00:00:41 =   21.9/s Avg:    20 Min:    13 Max:   137 Err:     0 (0.00%)
+summary +    569 in 00:00:19 =   29.4/s Avg:    20 Min:     9 Max:    48 Err:     0 (0.00%) Active: 0 Started: 30 Finished: 30
+summary =   1456 in 00:01:00 =   24.3/s Avg:    20 Min:     9 Max:   137 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Jun 25 16:03:19 CST (1782374599485)
+... end of run

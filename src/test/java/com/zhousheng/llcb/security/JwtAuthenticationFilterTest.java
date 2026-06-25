@@ -3,6 +3,7 @@ package com.zhousheng.llcb.security;
 import jakarta.servlet.FilterChain;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -75,6 +76,30 @@ class JwtAuthenticationFilterTest {
         filter(jwtService, users).doFilter(request(token), new MockHttpServletResponse(), mock(FilterChain.class));
 
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNotNull();
+    }
+
+    @Test
+    void skipsRequestWithoutBearerToken() throws Exception {
+        FilterChain chain = mock(FilterChain.class);
+
+        filter(jwtService(), mock(UserDetailsService.class))
+                .doFilter(new MockHttpServletRequest(), new MockHttpServletResponse(), chain);
+
+        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+        verify(chain).doFilter(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any());
+    }
+
+    @Test
+    void keepsExistingAuthenticationWhenPresent() throws Exception {
+        JwtService jwtService = jwtService();
+        UserDetailsService users = mock(UserDetailsService.class);
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken("existing", null, List.of()));
+        String token = jwtService.createToken(7L, "qa_user", Map.of());
+
+        filter(jwtService, users).doFilter(request(token), new MockHttpServletResponse(), mock(FilterChain.class));
+
+        assertThat(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).isEqualTo("existing");
     }
 
     @Test

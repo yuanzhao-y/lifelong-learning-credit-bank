@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "suite": "LLCB key browser E2E",
+    "executedAt": "2026-06-25T07:14:24.109Z",
+    "baseUrl": "http://127.0.0.1:3000"
+  },
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "results": [
+    {
+      "id": "FE-E2E-01",
+      "requirement": "FR-01",
+      "description": "Learner login and dashboard route",
+      "expected": "URL leaves /login",
+      "actual": "http://127.0.0.1:3000/",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-02",
+      "requirement": "FR-16",
+      "description": "Public/learner outcome browse",
+      "expected": "outcome page content visible",
+      "actual": "终身学习学分银行",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-03",
+      "requirement": "FR-07",
+      "description": "Credit account page",
+      "expected": "credit account content visible",
+      "actual": "http://127.0.0.1:3000/credit/account",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-04",
+      "requirement": "FR-05",
+      "description": "Certification application page",
+      "expected": "apply form route renders",
+      "actual": "http://127.0.0.1:3000/cert/apply",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-05",
+      "requirement": "FR-08",
+      "description": "Conversion rule browse page",
+      "expected": "rule page route renders",
+      "actual": "http://127.0.0.1:3000/conversion/rules",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-06",
+      "requirement": "FR-03",
+      "description": "Learner cannot stay on admin user management",
+      "expected": "redirected or access blocked",
+      "actual": "http://127.0.0.1:3000/",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-07",
+      "requirement": "FR-03",
+      "description": "Admin dashboard route",
+      "expected": "admin route available",
+      "actual": "http://127.0.0.1:3000/admin",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-08",
+      "requirement": "FR-04",
+      "description": "Admin outcome management page",
+      "expected": "admin outcome route renders",
+      "actual": "http://127.0.0.1:3000/admin/outcomes",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-09",
+      "requirement": "FR-12",
+      "description": "Admin statistics page",
+      "expected": "statistics route renders",
+      "actual": "http://127.0.0.1:3000/admin/statistics",
+      "status": "PASS"
+    },
+    {
+      "id": "FE-E2E-10",
+      "requirement": "FR-03",
+      "description": "Mobile admin layout width",
+      "expected": "no horizontal overflow",
+      "actual": "{\"clientWidth\":390,\"scrollWidth\":390,\"bodyScrollWidth\":390}",
+      "status": "PASS"
+    }
+  ]
+}

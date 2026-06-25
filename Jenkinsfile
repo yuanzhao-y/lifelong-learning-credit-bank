@@ -42,6 +42,7 @@ pipeline {
       steps {
         dir('credit-bank-frontend') {
           sh 'npm ci'
+          sh 'npm audit --audit-level=low'
           sh 'npm run build'
         }
       }

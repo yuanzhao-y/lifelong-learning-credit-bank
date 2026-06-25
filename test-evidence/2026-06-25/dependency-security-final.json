@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "executedAt": "2026-06-25T07:08:03.047Z",
+    "proxy": "http://127.0.0.1:6244"
+  },
+  "checks": {
+    "npmAudit": {
+      "status": "PASS",
+      "detail": "metadata vulnerabilities total=0"
+    },
+    "mavenDependencyTree": {
+      "status": "PASS",
+      "detail": "Runtime dependency tree generated for audit traceability",
+      "raw": {
+        "command": "mvn -B -DincludeScope=runtime -DoutputFile=target/dependency-tree.txt dependency:tree",
+        "startedAt": "2026-06-25T07:08:03.048Z",
+        "exitCode": 0,
+        "timedOut": false,
+        "error": null,
+        "stdout": "[INFO] Scanning for projects...\r\n[INFO] \r\n[INFO] ------------< com.zhousheng:lifelong-learning-credit-bank >-------------\r\n[INFO] Building lifelong-learning-credit-bank 0.1.0-SNAPSHOT\r\n[INFO]   from pom.xml\r\n[INFO] --------------------------------[ jar ]---------------------------------\r\n[INFO] \r\n[INFO] --- maven-dependency-plugin:3.6.1:tree (default-cli) @ lifelong-learning-credit-bank ---\r\n[INFO] Wrote dependency tree to: C:\\Users\\zhous\\Desktop\\zhousheng\\zhuanyeshixun\\lifelong-learning-credit-bank\\target\\dependency-tree.txt\r\n[INFO] ------------------------------------------------------------------------\r\n[INFO] BUILD SUCCESS\r\n[INFO] ------------------------------------------------------------------------\r\n[INFO] Total time:  8.363 s\r\n[INFO] Finished at: 2026-06-25T15:08:12+08:00\r\n[INFO] ------------------------------------------------------------------------\r\n",
+        "stderr": ""
+      }
+    },
+    "osvScanner": {
+      "status": "LIMITED",
+      "detail": "OSV scanner unavailable, timed out or failed; not declared pass",
+      "raw": {
+        "command": "npx -y osv-scanner@latest scan --format=json --output=test-evidence/2026-06-25/osv-scan-final.json .",
+        "startedAt": "2026-06-25T07:08:12.326Z",
+        "exitCode": 1,
+        "timedOut": false,
+        "error": null,
+        "stdout": "",
+        "stderr": "npm error code E404\nnpm error 404 Not Found - GET https://registry.npmjs.org/osv-scanner - Not found\nnpm error 404\nnpm error 404  The requested resource 'osv-scanner@latest' could not be found or you do not have permission to access it.\nnpm error 404\nnpm error 404 Note that you can also install from a\nnpm error 404 tarball, folder, http url, or git url.\nnpm error A complete log of this run can be found in: C:\\Users\\zhous\\AppData\\Local\\npm-cache\\_logs\\2026-06-25T07_08_12_481Z-debug-0.log\n"
+      }
+    }
+  }
+}

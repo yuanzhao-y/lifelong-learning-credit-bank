@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "executedAt": "2026-06-25T07:41:49.810Z",
+    "target": "http://host.docker.internal/api",
+    "sourceOpenApiUrl": "http://127.0.0.1/api/v3/api-docs",
+    "openApiFile": "zap-final-openapi.json",
+    "timeoutSeconds": 900
+  },
+  "activeScan": {
+    "startedAt": "2026-06-25T07:24:49.796Z",
+    "exitCode": null,
+    "timedOut": true,
+    "error": "spawnSync docker ETIMEDOUT"
+  },
+  "reportFiles": [
+    "zap-final-report.html",
+    "zap-final-report.json",
+    "zap-final-report.md"
+  ],
+  "status": "LIMITED"
+}

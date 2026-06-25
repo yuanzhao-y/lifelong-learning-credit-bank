@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "executedAt": "2026-06-25T07:06:17.440Z",
+    "mysqlDump": "target/qa-restore/llcb-20260625070552.sql",
+    "redisBackup": "target/qa-restore/redis-20260625070552.rdb",
+    "jenkinsListing": "target/qa-restore/jenkins-home-20260625070552.txt",
+    "rtoSeconds": 25.33,
+    "rpo": "point-in-time manual dump/snapshot during audit"
+  },
+  "before": {
+    "database": {
+      "users": "23",
+      "credit_flows": "34",
+      "conversion_transactions": "7",
+      "operation_logs": "25136"
+    },
+    "redis": {
+      "ping": "PONG",
+      "keys": 0
+    }
+  },
+  "afterRestore": {
+    "database": {
+      "users": "23",
+      "credit_flows": "34",
+      "conversion_transactions": "7",
+      "operation_logs": "25136"
+    }
+  },
+  "checks": {
+    "mysqlDumpCreated": true,
+    "redisBackupCreated": true,
+    "jenkinsListingCreated": true,
+    "mysqlRestoreReady": true,
+    "databaseCountsMatch": true,
+    "redisBackupObservable": true
+  },
+  "passed": true
+}

@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "suite": "LLCB multi-node concurrency audit",
+    "executedAt": "2026-06-25T07:15:03.658Z",
+    "baseUrl": "http://127.0.0.1/api",
+    "backendUrls": [
+      "http://127.0.0.1:8080/api",
+      "http://127.0.0.1:8082/api"
+    ]
+  },
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  },
+  "results": [
+    {
+      "id": "MN-AUTH-L",
+      "requirement": "FR-01",
+      "description": "learner login for multinode audit",
+      "expected": "HTTP 200 and token",
+      "actual": "HTTP 200; roles=learner",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T07:15:02.750Z"
+    },
+    {
+      "id": "MN-AUTH-A",
+      "requirement": "FR-01",
+      "description": "auditor login for multinode audit",
+      "expected": "HTTP 200 and token",
+      "actual": "HTTP 200; roles=auditor",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T07:15:02.840Z"
+    },
+    {
+      "id": "MN-ENV-01",
+      "requirement": "ENV",
+      "description": "All configured backend nodes are reachable",
+      "expected": "every node returns 200/UP",
+      "actual": "[{\"url\":\"http://127.0.0.1:8080/api\",\"status\":200,\"health\":\"UP\"},{\"url\":\"http://127.0.0.1:8082/api\",\"status\":200,\"health\":\"UP\"}]",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T07:15:02.856Z"
+    },
+    {
+      "id": "MN-CONC-01",
+      "requirement": "FR-06",
+      "description": "Certification approval race across configured nodes",
+      "expected": "one success, remaining business rejected, at least two target nodes used",
+      "actual": "success=1; rejected=11; nodes=http://127.0.0.1:8082,http://127.0.0.1:8080",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T07:15:03.195Z"
+    },
+    {
+      "id": "MN-CONC-02",
+      "requirement": "FR-10",
+      "description": "Conversion approval race across configured nodes",
+      "expected": "one success, remaining business rejected, at least two target nodes used",
+      "actual": "success=1; rejected=11; nodes=http://127.0.0.1:8082,http://127.0.0.1:8080",
+      "status": "PASS",
+      "details": "",
+      "executedAt": "2026-06-25T07:15:03.658Z"
+    }
+  ]
+}
