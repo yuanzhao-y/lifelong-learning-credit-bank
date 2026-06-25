@@ -1,0 +1,21 @@
+installCommand=npm install --no-save playwright@1.56.1
+installExitCode=0
+command=node C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank\target\frontend-e2e-runner\qa-frontend-e2e.mjs
+exitCode=0
+timedOut=false
+
+INSTALL STDOUT
+
+up to date, audited 4 packages in 1s
+
+found 0 vulnerabilities
+
+
+INSTALL STDERR
+
+
+STDOUT
+{"total":10,"passed":10,"failed":0}
+
+
+STDERR

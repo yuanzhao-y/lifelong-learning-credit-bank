@@ -10,8 +10,9 @@
 | Frontend dist files | current working tree | Local `npm run build` | See `frontend-dist-sha256.txt` | Frontend build artifact identity | No |
 | Jenkins Build #8 archived Jar family | `16bbf1ed9afc1265dc03001cf6a0fc96c83a800a` | Jenkins `llcb-backend-ci` Build #8 | Jenkins fingerprint, archived in Build #8 | Infrastructure CI evidence before JaCoCo gate was committed | Yes |
 | Jenkins Build #9 archived Jar family | `30fcd870310826c87845b2e284ac34e72ec6e87c` | Jenkins `llcb-backend-ci` Build #9 | Jenkins fingerprint, archived in Build #9 | Remote CI evidence after JaCoCo gate was committed | Yes |
-| Final Jenkins archived Jar family | To be filled after final SHA build | Jenkins `llcb-backend-ci` | Jenkins fingerprint | Remote CI evidence for this hardening pass | Yes |
+| Jenkins Build #13 archived Jar | `b2291a4f13a9911613919306ccaf7307fb270d4d` | Jenkins `llcb-backend-ci` Build #13 | `8ef711f4f7ebfd6bb7ba1536f2442bfcd9f53cd248e51f6c776297dc8c370a60` | First final SHA successful CI archive | Yes |
+| Jenkins Build #14 archived Jar | `b2291a4f13a9911613919306ccaf7307fb270d4d` | Jenkins `llcb-backend-ci` Build #14 | `4b02ca52e881f6ef7c291c87ea7cd9e2c9b8fb2ba5d41a5a7e6dcd5a956d6e` | Second consecutive final SHA successful CI archive | Yes |
 
-Build #8 and #9 archived `test-evidence/**` from the repository in addition to Jenkins-generated Surefire, JaCoCo and Jar outputs. Being archived by Jenkins does not mean each evidence file was produced by that Jenkins run. The source for each evidence category is recorded in `evidence-map.md`.
+Build #8, #9, #13 and #14 archived `test-evidence/**` from the repository in addition to Jenkins-generated Surefire, JaCoCo and Jar outputs. Being archived by Jenkins does not mean each evidence file was produced by that Jenkins run. The source for each evidence category is recorded in `evidence-map.md`.
 
-The final Jenkins build for this pass must be recorded after commit and push. It should include the updated Jenkinsfile frontend `npm audit --audit-level=low` step, 111 backend tests, JaCoCo core coverage gate, frontend build, Compose validation and artifact archival.
+Build #13 and Build #14 include the updated Jenkinsfile frontend `npm audit --audit-level=low` step, 111 backend tests, JaCoCo core coverage gate, frontend build, Compose validation and artifact archival. The two Jar hashes differ because the packaged Spring Boot Jar is not byte-for-byte reproducible across builds; both archives are tied to the same source commit and Jenkins fingerprints.

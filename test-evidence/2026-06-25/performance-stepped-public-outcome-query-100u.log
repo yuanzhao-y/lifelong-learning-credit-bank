@@ -1,0 +1,264 @@
+2026-06-25 16:08:12,012 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-06-25 16:08:12,024 INFO o.a.j.JMeter: Loading user properties from: D:\application\apache-jmeter-5.6.3\bin\user.properties
+2026-06-25 16:08:12,024 INFO o.a.j.JMeter: Loading system properties from: D:\application\apache-jmeter-5.6.3\bin\system.properties
+2026-06-25 16:08:12,024 INFO o.a.j.JMeter: Loading additional properties from: C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank\target\qa-performance\public-outcome-query-100u.properties
+2026-06-25 16:08:12,025 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.output_format=csv
+2026-06-25 16:08:12,025 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.print_field_names=true
+2026-06-25 16:08:12,025 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.response_data=false
+2026-06-25 16:08:12,025 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.samplerData=false
+2026-06-25 16:08:12,025 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.requestHeaders=false
+2026-06-25 16:08:12,025 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.responseHeaders=false
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: Version 5.6.3
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: java.version=21.0.9
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: os.name=Windows 11
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: os.arch=amd64
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: os.version=10.0
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: java.awt.headless=true
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-06-25 16:08:12,030 INFO o.a.j.JMeter: Available Processors =24
+2026-06-25 16:08:12,036 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-06-25 16:08:12,036 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-06-25 16:08:12,036 INFO o.a.j.JMeter: JMeterHome=D:\application\apache-jmeter-5.6.3
+2026-06-25 16:08:12,036 INFO o.a.j.JMeter: user.dir  =C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank
+2026-06-25 16:08:12,036 INFO o.a.j.JMeter: PWD       =C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank
+2026-06-25 16:08:16,988 INFO o.a.j.JMeter: IP: 172.29.97.145 Name: LAPTOP-01CQNU59 FullName: LAPTOP-01CQNU59
+2026-06-25 16:08:16,995 INFO o.a.j.s.FileServer: Default base='C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank'
+2026-06-25 16:08:17,002 INFO o.a.j.s.FileServer: Set new base='C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank\scripts\qa'
+2026-06-25 16:08:17,104 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-06-25 16:08:17,124 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-06-25 16:08:17,127 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-06-25 16:08:17,128 INFO o.a.j.s.SaveService: Loading file: C:\Users\zhous\Desktop\zhousheng\zhuanyeshixun\lifelong-learning-credit-bank\scripts\qa\performance-test.jmx
+2026-06-25 16:08:17,163 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-06-25 16:08:17,164 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-06-25 16:08:17,164 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-06-25 16:08:17,164 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-06-25 16:08:17,164 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-06-25 16:08:17,164 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-06-25 16:08:17,171 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-06-25 16:08:17,183 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-06-25 16:08:17,184 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-06-25 16:08:17,184 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-06-25 16:08:17,187 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-06-25 16:08:17,187 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-06-25 16:08:17,230 INFO o.a.j.JMeter: Running test (1782374897230)
+2026-06-25 16:08:17,238 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : public-outcome-query
+2026-06-25 16:08:17,239 INFO o.a.j.e.StandardJMeterEngine: Starting 100 threads for group public-outcome-query.
+2026-06-25 16:08:17,239 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-06-25 16:08:17,239 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=100 ramp-up=20 delayedStart=false
+2026-06-25 16:08:17,243 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-1
+2026-06-25 16:08:17,259 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-06-25 16:08:17,259 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-06-25 16:08:17,442 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-2
+2026-06-25 16:08:17,642 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-3
+2026-06-25 16:08:17,842 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-4
+2026-06-25 16:08:18,041 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-5
+2026-06-25 16:08:18,241 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-6
+2026-06-25 16:08:18,253 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = LAPTOP-01CQNU59
+2026-06-25 16:08:18,257 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-06-25 16:08:18,258 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-06-25 16:08:18,258 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-06-25 16:08:18,258 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-06-25 16:08:18,258 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-06-25 16:08:18,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-7
+2026-06-25 16:08:18,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-8
+2026-06-25 16:08:18,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-9
+2026-06-25 16:08:19,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-10
+2026-06-25 16:08:19,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-11
+2026-06-25 16:08:19,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-12
+2026-06-25 16:08:19,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-13
+2026-06-25 16:08:19,841 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-14
+2026-06-25 16:08:20,041 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-15
+2026-06-25 16:08:20,241 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-16
+2026-06-25 16:08:20,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-17
+2026-06-25 16:08:20,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-18
+2026-06-25 16:08:20,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-19
+2026-06-25 16:08:21,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-20
+2026-06-25 16:08:21,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-21
+2026-06-25 16:08:21,441 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-22
+2026-06-25 16:08:21,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-23
+2026-06-25 16:08:21,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-24
+2026-06-25 16:08:22,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-25
+2026-06-25 16:08:22,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-26
+2026-06-25 16:08:22,441 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-27
+2026-06-25 16:08:22,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-28
+2026-06-25 16:08:22,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-29
+2026-06-25 16:08:23,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-30
+2026-06-25 16:08:23,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-31
+2026-06-25 16:08:23,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-32
+2026-06-25 16:08:23,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-33
+2026-06-25 16:08:23,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-34
+2026-06-25 16:08:24,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-35
+2026-06-25 16:08:24,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-36
+2026-06-25 16:08:24,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-37
+2026-06-25 16:08:24,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-38
+2026-06-25 16:08:24,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-39
+2026-06-25 16:08:25,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-40
+2026-06-25 16:08:25,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-41
+2026-06-25 16:08:25,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-42
+2026-06-25 16:08:25,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-43
+2026-06-25 16:08:25,841 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-44
+2026-06-25 16:08:26,041 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-45
+2026-06-25 16:08:26,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-46
+2026-06-25 16:08:26,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-47
+2026-06-25 16:08:26,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-48
+2026-06-25 16:08:26,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-49
+2026-06-25 16:08:27,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-50
+2026-06-25 16:08:27,241 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-51
+2026-06-25 16:08:27,441 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-52
+2026-06-25 16:08:27,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-53
+2026-06-25 16:08:27,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-54
+2026-06-25 16:08:28,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-55
+2026-06-25 16:08:28,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-56
+2026-06-25 16:08:28,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-57
+2026-06-25 16:08:28,652 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-58
+2026-06-25 16:08:28,852 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-59
+2026-06-25 16:08:29,049 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-60
+2026-06-25 16:08:29,249 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-61
+2026-06-25 16:08:29,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-62
+2026-06-25 16:08:29,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-63
+2026-06-25 16:08:29,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-64
+2026-06-25 16:08:30,017 INFO o.a.j.r.Summariser: summary +    375 in 00:00:13 =   29.3/s Avg:    16 Min:    11 Max:    33 Err:     0 (0.00%) Active: 64 Started: 64 Finished: 0
+2026-06-25 16:08:30,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-65
+2026-06-25 16:08:30,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-66
+2026-06-25 16:08:30,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-67
+2026-06-25 16:08:30,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-68
+2026-06-25 16:08:30,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-69
+2026-06-25 16:08:31,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-70
+2026-06-25 16:08:31,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-71
+2026-06-25 16:08:31,442 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-72
+2026-06-25 16:08:31,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-73
+2026-06-25 16:08:31,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-74
+2026-06-25 16:08:32,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-75
+2026-06-25 16:08:32,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-76
+2026-06-25 16:08:32,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-77
+2026-06-25 16:08:32,641 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-78
+2026-06-25 16:08:32,841 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-79
+2026-06-25 16:08:33,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-80
+2026-06-25 16:08:33,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-81
+2026-06-25 16:08:33,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-82
+2026-06-25 16:08:33,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-83
+2026-06-25 16:08:33,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-84
+2026-06-25 16:08:34,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-85
+2026-06-25 16:08:34,239 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-86
+2026-06-25 16:08:34,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-87
+2026-06-25 16:08:34,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-88
+2026-06-25 16:08:34,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-89
+2026-06-25 16:08:35,039 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-90
+2026-06-25 16:08:35,240 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-91
+2026-06-25 16:08:35,440 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-92
+2026-06-25 16:08:35,640 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-93
+2026-06-25 16:08:35,840 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-94
+2026-06-25 16:08:36,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-95
+2026-06-25 16:08:36,241 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-96
+2026-06-25 16:08:36,439 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-97
+2026-06-25 16:08:36,639 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-98
+2026-06-25 16:08:36,839 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-99
+2026-06-25 16:08:37,040 INFO o.a.j.t.JMeterThread: Thread started: public-outcome-query 1-100
+2026-06-25 16:09:00,011 INFO o.a.j.r.Summariser: summary +   2777 in 00:00:30 =   92.6/s Avg:    18 Min:    11 Max:    42 Err:     0 (0.00%) Active: 100 Started: 100 Finished: 0
+2026-06-25 16:09:00,012 INFO o.a.j.r.Summariser: summary =   3152 in 00:00:43 =   73.7/s Avg:    18 Min:    11 Max:    42 Err:     0 (0.00%)
+2026-06-25 16:09:16,288 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-40
+2026-06-25 16:09:16,298 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-91
+2026-06-25 16:09:16,300 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-86
+2026-06-25 16:09:16,314 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-35
+2026-06-25 16:09:16,329 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-96
+2026-06-25 16:09:16,330 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-81
+2026-06-25 16:09:16,375 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-20
+2026-06-25 16:09:16,391 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-71
+2026-06-25 16:09:16,410 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-56
+2026-06-25 16:09:16,411 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-25
+2026-06-25 16:09:16,485 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-92
+2026-06-25 16:09:16,492 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-10
+2026-06-25 16:09:16,510 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-66
+2026-06-25 16:09:16,522 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-5
+2026-06-25 16:09:16,531 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-51
+2026-06-25 16:09:16,531 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-76
+2026-06-25 16:09:16,532 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-21
+2026-06-25 16:09:16,532 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-15
+2026-06-25 16:09:16,532 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-30
+2026-06-25 16:09:16,532 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-87
+2026-06-25 16:09:16,532 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-61
+2026-06-25 16:09:16,537 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-26
+2026-06-25 16:09:16,547 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-82
+2026-06-25 16:09:16,553 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-97
+2026-06-25 16:09:16,553 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-46
+2026-06-25 16:09:16,553 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-41
+2026-06-25 16:09:16,553 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-36
+2026-06-25 16:09:16,553 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-31
+2026-06-25 16:09:16,553 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-11
+2026-06-25 16:09:16,682 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-27
+2026-06-25 16:09:16,698 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-67
+2026-06-25 16:09:16,714 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-32
+2026-06-25 16:09:16,714 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-6
+2026-06-25 16:09:16,714 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-93
+2026-06-25 16:09:16,730 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-22
+2026-06-25 16:09:16,747 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-16
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-77
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-52
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-47
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-72
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-42
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-83
+2026-06-25 16:09:16,754 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-62
+2026-06-25 16:09:16,762 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-12
+2026-06-25 16:09:16,767 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-78
+2026-06-25 16:09:16,781 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-2
+2026-06-25 16:09:16,783 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-17
+2026-06-25 16:09:16,794 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-1
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-63
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-53
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-57
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-73
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-37
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-68
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-88
+2026-06-25 16:09:16,800 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-98
+2026-06-25 16:09:16,808 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-58
+2026-06-25 16:09:16,813 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-7
+2026-06-25 16:09:16,813 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-99
+2026-06-25 16:09:16,813 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-48
+2026-06-25 16:09:16,868 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-33
+2026-06-25 16:09:16,877 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-89
+2026-06-25 16:09:16,877 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-38
+2026-06-25 16:09:16,877 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-94
+2026-06-25 16:09:16,877 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-43
+2026-06-25 16:09:16,882 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-23
+2026-06-25 16:09:16,882 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-28
+2026-06-25 16:09:16,883 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-84
+2026-06-25 16:09:16,897 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-18
+2026-06-25 16:09:16,913 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-74
+2026-06-25 16:09:16,928 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-79
+2026-06-25 16:09:16,934 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-13
+2026-06-25 16:09:16,934 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-3
+2026-06-25 16:09:16,990 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-54
+2026-06-25 16:09:16,990 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-100
+2026-06-25 16:09:16,990 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-8
+2026-06-25 16:09:16,990 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-64
+2026-06-25 16:09:16,990 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-69
+2026-06-25 16:09:17,003 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-49
+2026-06-25 16:09:17,008 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-59
+2026-06-25 16:09:17,025 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-95
+2026-06-25 16:09:17,027 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-39
+2026-06-25 16:09:17,036 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-90
+2026-06-25 16:09:17,041 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-24
+2026-06-25 16:09:17,054 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-34
+2026-06-25 16:09:17,085 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-75
+2026-06-25 16:09:17,096 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-14
+2026-06-25 16:09:17,096 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-4
+2026-06-25 16:09:17,096 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-80
+2026-06-25 16:09:17,096 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-29
+2026-06-25 16:09:17,096 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-85
+2026-06-25 16:09:17,096 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-44
+2026-06-25 16:09:17,100 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-70
+2026-06-25 16:09:17,114 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-60
+2026-06-25 16:09:17,116 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-9
+2026-06-25 16:09:17,131 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-19
+2026-06-25 16:09:17,197 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-50
+2026-06-25 16:09:17,199 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-45
+2026-06-25 16:09:17,209 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-55
+2026-06-25 16:09:17,215 INFO o.a.j.t.JMeterThread: Thread finished: public-outcome-query 1-65
+2026-06-25 16:09:17,216 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-06-25 16:09:17,217 INFO o.a.j.r.Summariser: summary +   1690 in 00:00:17 =   98.2/s Avg:    20 Min:    10 Max:    40 Err:     0 (0.00%) Active: 0 Started: 100 Finished: 100
+2026-06-25 16:09:17,217 INFO o.a.j.r.Summariser: summary =   4842 in 00:01:00 =   80.7/s Avg:    18 Min:    10 Max:    42 Err:     0 (0.00%)

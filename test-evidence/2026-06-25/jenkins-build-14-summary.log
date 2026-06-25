@@ -1,0 +1,16 @@
+﻿Checking out Revision b2291a4f13a9911613919306ccaf7307fb270d4d (refs/remotes/origin/develop)
+Commit message: "test: improve Jenkins stability evidence parsing"
+Checking out Revision b2291a4f13a9911613919306ccaf7307fb270d4d (refs/remotes/origin/develop)
+Commit message: "test: improve Jenkins stability evidence parsing"
+[2026-06-25T08:47:49.227Z] Checking out Revision b2291a4f13a9911613919306ccaf7307fb270d4d (refs/remotes/origin/develop)
+[2026-06-25T08:47:49.237Z] Commit message: "test: improve Jenkins stability evidence parsing"
+[2026-06-25T08:47:51.504Z] + mvn -B clean verify
+[2026-06-25T08:48:01.192Z] [INFO] Tests run: 111, Failures: 0, Errors: 0, Skipped: 0
+[2026-06-25T08:48:01.693Z] [INFO] --- jacoco:0.8.12:check (check-core-coverage) @ lifelong-learning-credit-bank ---
+[2026-06-25T08:48:02.651Z] + npm ci
+[2026-06-25T08:48:07.081Z] + npm audit --audit-level=low
+[2026-06-25T08:48:08.720Z] + npm run build
+[2026-06-25T08:48:13.867Z] + docker-compose config --quiet
+[2026-06-25T08:48:14.491Z] Archiving artifacts
+[2026-06-25T08:48:14.545Z] Recording fingerprints
+Finished: SUCCESS

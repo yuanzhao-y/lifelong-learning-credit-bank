@@ -3,7 +3,7 @@
 | Evidence ID | Scope | Source file/path | Produced by | Environment | SHA | Jenkins generated in latest CI |
 | --- | --- | --- | --- | --- | --- | --- |
 | EV-SRC-001 | Historical version inheritance | `source-diff-2480-to-16bb.md` | Git tree/blob comparison | Local repo | `2480b084...` to `16bbf1ed...` | No |
-| EV-SRC-002 | Final CI/report diff | `source-diff-final-ci-to-report.md` | Git diff after final CI | Local repo | to be filled after final CI | No |
+| EV-SRC-002 | Final CI/report diff | `source-diff-final-ci-to-report.md` | Git diff after final CI | Local repo | `b2291a4...` to post-CI evidence commit | No |
 | EV-API-001 | API audit summary | `api-audit-summary.md` | `scripts/qa/run-api-audit.mjs` | Local Docker/Nginx | `2480b084...` | No |
 | EV-API-002 | API audit raw result | `api-audit.json` | `scripts/qa/run-api-audit.mjs` | Local Docker/Nginx | `2480b084...` | No |
 | EV-DB-001 | Database consistency | `database-audit.txt` | `scripts/qa/run-database-audit.mjs` | Local MySQL container | `2480b084...` | No |
@@ -29,7 +29,10 @@
 | EV-CI-007 | Jenkins Build #7 | `jenkins-build-7.md`, `jenkins-build-7-stage-view.png` | Jenkins pipeline | Jenkins container | `2480b084...` | Yes |
 | EV-CI-008 | Jenkins Build #8 | `jenkins-build-8.md` | Jenkins pipeline | Jenkins container | `16bbf1ed...` | Yes |
 | EV-CI-009 | Jenkins Build #9 | `jenkins-build-9.md`, `jenkins-build-9-summary.log` | Jenkins pipeline | Jenkins container | `30fcd870310826c87845b2e284ac34e72ec6e87c` | Yes |
-| EV-CI-STAB | Jenkins stability | `jenkins-stability.md`, `jenkins-stability.json` | `scripts/qa/collect-jenkins-stability.mjs` | Jenkins container | final SHA after push | Yes |
+| EV-CI-012 | Jenkins Build #12 checkout failure | `jenkins-build-12.md`, `jenkins-build-12-summary.log` | Jenkins pipeline | Jenkins container | `b2291a4f13a9911613919306ccaf7307fb270d4d` | Yes |
+| EV-CI-013 | Jenkins Build #13 final SHA success | `jenkins-build-13.md`, `jenkins-build-13-summary.log` | Jenkins pipeline | Jenkins container | `b2291a4f13a9911613919306ccaf7307fb270d4d` | Yes |
+| EV-CI-014 | Jenkins Build #14 final SHA success | `jenkins-build-14.md`, `jenkins-build-14-summary.log` | Jenkins pipeline | Jenkins container | `b2291a4f13a9911613919306ccaf7307fb270d4d` | Yes |
+| EV-CI-STAB | Jenkins stability | `jenkins-stability.md`, `jenkins-stability.json` | `scripts/qa/collect-jenkins-stability.mjs` | Jenkins container | `b2291a4f13a9911613919306ccaf7307fb270d4d` | Yes |
 | EV-LOCAL-001 | Post-review local gate | `post-review-verification.md` | Maven/npm verification | Local toolchain | local working tree after `16bbf1ed...` | No |
 | EV-LINEAGE-001 | Artifact lineage | `artifact-lineage.md` | Hash/fingerprint consolidation | Local/Jenkins | mixed, stated per row | Mixed |
 | EV-MANIFEST-001 | Evidence package manifest | `manifest.sha256` | SHA-256 hashing | Local filesystem | current evidence package | No |

@@ -1,0 +1,10 @@
+﻿Checking out Revision 2480b084bc99813cdcaa0d265fabf937503a680d (refs/remotes/origin/develop)
+Checking out Revision 2480b084bc99813cdcaa0d265fabf937503a680d (refs/remotes/origin/develop)
+[2026-06-25T03:21:53.725Z] Checking out Revision 2480b084bc99813cdcaa0d265fabf937503a680d (refs/remotes/origin/develop)
+[2026-06-25T03:22:05.759Z] [INFO] Tests run: 94, Failures: 0, Errors: 0, Skipped: 0
+[2026-06-25T03:22:06.260Z] [INFO] BUILD SUCCESS
+[2026-06-25T03:22:07.599Z] + npm ci
+[2026-06-25T03:22:22.660Z] [32m✓ built in 1.24s[39m
+[2026-06-25T03:22:23.592Z] + docker-compose config --quiet
+[2026-06-25T03:22:24.191Z] Archiving artifacts
+Finished: SUCCESS

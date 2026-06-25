@@ -1,0 +1,9 @@
+﻿Checking out Revision b2291a4f13a9911613919306ccaf7307fb270d4d (refs/remotes/origin/develop)
+Commit message: "test: improve Jenkins stability evidence parsing"
+Checking out Revision b2291a4f13a9911613919306ccaf7307fb270d4d (refs/remotes/origin/develop)
+Commit message: "test: improve Jenkins stability evidence parsing"
+[2026-06-25T08:45:39.655Z] ERROR: Error fetching remote repo 'origin'
+[2026-06-25T08:45:39.656Z] stderr: fatal: unable to access 'https://github.com/yuanzhao-y/lifelong-learning-credit-bank/': GnuTLS recv error (-110): The TLS connection was non-properly terminated.
+[2026-06-25T08:45:39.656Z] ERROR: Error fetching remote repo 'origin'
+ERROR: Error fetching remote repo 'origin'
+Finished: FAILURE

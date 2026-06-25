@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "executedAt": "2026-06-25T08:49:10.522Z",
+    "job": "llcb-backend-ci",
+    "expectedCommit": "b2291a4f13a9911613919306ccaf7307fb270d4d"
+  },
+  "builds": [
+    {
+      "number": "10",
+      "result": "SUCCESS",
+      "durationMilliseconds": "43671",
+      "commit": "4cbeefa63a3e5a29b6e6c5e672a9a6784bab57bc",
+      "hasCleanWorkspaceSignal": true,
+      "hasBackendVerify": true,
+      "hasFrontendBuild": true,
+      "hasComposeCheck": true,
+      "hasArchive": true,
+      "archiveExcerpt": "Archiving artifacts\n[2026-06-25T08:36:58.011Z] Recording fingerprints"
+    },
+    {
+      "number": "11",
+      "result": "SUCCESS",
+      "durationMilliseconds": "36356",
+      "commit": "4cbeefa63a3e5a29b6e6c5e672a9a6784bab57bc",
+      "hasCleanWorkspaceSignal": true,
+      "hasBackendVerify": true,
+      "hasFrontendBuild": true,
+      "hasComposeCheck": true,
+      "hasArchive": true,
+      "archiveExcerpt": "Archiving artifacts\n[2026-06-25T08:38:02.074Z] Recording fingerprints"
+    },
+    {
+      "number": "12",
+      "result": "FAILURE",
+      "durationMilliseconds": "8897",
+      "commit": "b2291a4f13a9911613919306ccaf7307fb270d4d",
+      "hasCleanWorkspaceSignal": true,
+      "hasBackendVerify": false,
+      "hasFrontendBuild": false,
+      "hasComposeCheck": false,
+      "hasArchive": false,
+      "archiveExcerpt": ""
+    },
+    {
+      "number": "13",
+      "result": "SUCCESS",
+      "durationMilliseconds": "38255",
+      "commit": "b2291a4f13a9911613919306ccaf7307fb270d4d",
+      "hasCleanWorkspaceSignal": true,
+      "hasBackendVerify": true,
+      "hasFrontendBuild": true,
+      "hasComposeCheck": true,
+      "hasArchive": true,
+      "archiveExcerpt": "Archiving artifacts\n[2026-06-25T08:47:15.118Z] Recording fingerprints"
+    },
+    {
+      "number": "14",
+      "result": "SUCCESS",
+      "durationMilliseconds": "37349",
+      "commit": "b2291a4f13a9911613919306ccaf7307fb270d4d",
+      "hasCleanWorkspaceSignal": true,
+      "hasBackendVerify": true,
+      "hasFrontendBuild": true,
+      "hasComposeCheck": true,
+      "hasArchive": true,
+      "archiveExcerpt": "Archiving artifacts\n[2026-06-25T08:48:14.545Z] Recording fingerprints"
+    }
+  ],
+  "matchingSuccessfulBuilds": [
+    "13",
+    "14"
+  ],
+  "checks": {
+    "atLeastTwoRecentSuccessfulBuildsForExpectedCommit": true,
+    "allExpectedBuildsRanBackendVerify": true,
+    "allExpectedBuildsRanFrontendBuild": true,
+    "allExpectedBuildsRanComposeCheck": true,
+    "allExpectedBuildsArchivedArtifacts": true
+  },
+  "passed": true
+}

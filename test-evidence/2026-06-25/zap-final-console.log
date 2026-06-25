@@ -1,0 +1,10 @@
+startedAt=2026-06-25T07:24:49.796Z
+command=docker run --rm --add-host=host.docker.internal:host-gateway -v C:/Users/zhous/Desktop/zhousheng/zhuanyeshixun/lifelong-learning-credit-bank/test-evidence/2026-06-25:/zap/wrk ghcr.io/zaproxy/zaproxy:stable zap-api-scan.py -t /zap/wrk/zap-final-openapi.json -f openapi -r zap-final-report.html -J zap-final-report.json -w zap-final-report.md -z -config api.disablekey=true -config scanner.threadPerHost=4 -config spider.maxDuration=900
+exitCode=null
+timedOut=true
+
+STDOUT
+
+
+STDERR
+2026-06-25 07:34:01,225 Number of Imported URLs: 120

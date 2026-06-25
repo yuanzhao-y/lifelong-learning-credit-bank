@@ -4,7 +4,7 @@
 | --- | --- |
 | `version-manifest.md` | Tested source, requirements, schema, artifact and image identities |
 | `source-diff-2480-to-16bb.md` | Historical source equivalence evidence between functional/security testing commit and infrastructure CI commit |
-| `source-diff-final-ci-to-report.md` | Reserved/final source diff evidence between final CI SHA and any report-only follow-up commit |
+| `source-diff-final-ci-to-report.md` | Final source diff evidence between final CI SHA and the report/evidence follow-up commit |
 | `artifact-lineage.md` | Commit, Jar, image, frontend artifact and Jenkins archive relationship |
 | `evidence-map.md` | Evidence IDs with paths, source, environment, SHA and Jenkins-generation status |
 | `environment.md` | Host, toolchain, service exposure, image digest and data-scale context |
@@ -31,6 +31,9 @@
 | `jenkins-build-7-summary.log`, `jenkins-build-7.md`, `jenkins-build-7-stage-view.png` | First complete remote Pipeline and page evidence |
 | `jenkins-build-8-summary.log`, `jenkins-build-8.md` | Final infrastructure commit Pipeline result |
 | `jenkins-build-9-summary.log`, `jenkins-build-9.md` | Remote CI gate closure after JaCoCo check was committed |
-| `jenkins-stability.md`, `jenkins-stability.json` | To be generated after final SHA repeated Jenkins builds |
+| `jenkins-build-12-summary.log`, `jenkins-build-12.md` | Final SHA checkout retry failure caused by GitHub TLS interruption |
+| `jenkins-build-13-summary.log`, `jenkins-build-13.md` | First successful final SHA Jenkins build |
+| `jenkins-build-14-summary.log`, `jenkins-build-14.md` | Second consecutive successful final SHA Jenkins build |
+| `jenkins-stability.md`, `jenkins-stability.json` | Final SHA repeated Jenkins build stability summary |
 
 All evidence was checked for non-empty files where applicable. Tokens, AccessKey values, verification codes and real passwords are not included. Use `manifest.sha256` to verify file integrity when the evidence package is copied outside the repository.
