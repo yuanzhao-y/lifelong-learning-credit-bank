@@ -93,7 +93,7 @@ services:
     container_name: llcb-jenkins
     restart: unless-stopped
     ports:
-      - "${JENKINS_PORT:-8081}:8080"
+      - "127.0.0.1:${JENKINS_PORT:-8081}:8080"
     volumes:
       - jenkins-home:/var/jenkins_home
 
