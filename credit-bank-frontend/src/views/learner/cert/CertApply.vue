@@ -111,13 +111,13 @@ const router = useRouter()
 const formRef = ref<FormInstance>()
 
 const activeStep = ref(0)
-const selectedOutcomeId = ref<number | null>(null)
+const selectedOutcomeId = ref<string>('')
 const outcomeOptions = ref<any[]>([])
 const selectedOutcome = ref<any>(null)
 const submitting = ref(false)
 
 const form = reactive({
-  catalogId: 0,
+  catalogId: '',
   certifyType: '',
   outcomeName: '',
   certificateNo: '',
@@ -153,13 +153,13 @@ const loadOutcomeOptions = async () => {
     
     // Check if redirect query exists
     if (route.query.outcomeId) {
-      selectedOutcomeId.value = Number(route.query.outcomeId)
+      selectedOutcomeId.value = String(route.query.outcomeId)
       handleOutcomeSelect(selectedOutcomeId.value)
     }
   } catch (e) {}
 }
 
-const handleOutcomeSelect = async (id: number) => {
+const handleOutcomeSelect = async (id: string) => {
   try {
     const detail = await getPublicOutcomeDetail(id)
     selectedOutcome.value = detail

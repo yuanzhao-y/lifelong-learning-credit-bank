@@ -6,6 +6,7 @@ import jakarta.validation.constraints.DecimalMin;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public final class BizDtos {
@@ -33,6 +34,31 @@ public final class BizDtos {
     }
 
     public record ConversionPreviewResponse(Long ruleId, BigDecimal conversionRatio, BigDecimal targetCredit) {
+    }
+
+    public record ConversionAuditItem(
+            Long id,
+            String applicationNo,
+            Long applicantId,
+            String applicantName,
+            Long ruleId,
+            String ruleName,
+            Long sourceOutcomeId,
+            String sourceOutcomeName,
+            Long sourceCatalogId,
+            String sourceCatalogName,
+            Long targetCatalogId,
+            String targetCatalogName,
+            BigDecimal sourceCredit,
+            BigDecimal conversionRatio,
+            BigDecimal targetCredit,
+            String status,
+            Long freezeFlowId,
+            Long targetOutcomeId,
+            LocalDateTime submittedAt,
+            Long auditUserId,
+            LocalDateTime auditedAt,
+            String rejectReason) {
     }
 
     public record ReviewAssignRequest(@NotNull Long expertId) {

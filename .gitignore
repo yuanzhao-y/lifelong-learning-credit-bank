@@ -30,9 +30,25 @@ coverage/
 
 # Local report materials
 素材/
+测试文档交付-20260629/
+202313160930-周康-实训报告*
+*.md
+202313160930-周康-实训报告.docx
+202313160930-周康-实训报告 - 副本.docx
+202313160930-周康-实训报告.before-subject-wording-fix-20260629.docx
+202313160930-周康-实训报告.before-figure-text-alignment-20260629.docx
 
 # Office and OS temporary files
 ~$*
 .DS_Store
 Thumbs.db
 Desktop.ini
+202313160930-周康-实训报告.before-aiwording-full-20260629.docx
+202313160930-*.before-test-3module-template-fix-20260629.docx
+202313160930-*.before-toc-27-run-fix-20260629.docx
+202313160930-*.before-test-exec-table-pagebreak-20260629.docx
+202313160930-*.before-223-flow-control-20260629.docx
+202313160930-*.before-27-result-clean-20260629.docx
+202313160930-*.before-db-model-wording-20260629.docx
+202313160930-*.before-physical-structure-flow-20260629.docx
+202313160930-*.before-er-figure-wording-20260630.docx

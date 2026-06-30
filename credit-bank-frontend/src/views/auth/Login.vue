@@ -207,6 +207,19 @@ const smsRules: FormRules = {
 
 let cooldownTimer: ReturnType<typeof setInterval> | null = null
 
+const redirectAfterLogin = () => {
+  const roles = authStore.roles
+  if (roles.includes('admin')) {
+    router.push('/admin')
+  } else if (roles.includes('auditor')) {
+    router.push('/auditor/cert/audit')
+  } else if (roles.includes('expert')) {
+    router.push('/expert/reviews')
+  } else {
+    router.push('/')
+  }
+}
+
 const handleSendCode = async () => {
   if (!smsForm.phone || codeCooldown.value > 0) return
   try {
@@ -231,12 +244,7 @@ const handlePasswordLogin = async () => {
   try {
     await authStore.login(() => passwordLogin(pwdForm))
     ElMessage.success('登录成功')
-    const roles = authStore.roles
-    if (roles.includes('admin')) {
-      router.push('/admin')
-    } else {
-      router.push('/')
-    }
+    redirectAfterLogin()
   } catch { /* handled */ }
   finally { loading.value = false }
 }
@@ -249,7 +257,7 @@ const handleSmsLogin = async () => {
   try {
     await authStore.login(() => smsLogin(smsForm))
     ElMessage.success('登录成功')
-    router.push('/')
+    redirectAfterLogin()
   } catch { /* handled */ }
   finally { loading.value = false }
 }

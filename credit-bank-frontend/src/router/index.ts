@@ -10,7 +10,7 @@ const router = createRouter({
     {
       path: '/',
       component: () => import('@/layouts/DefaultLayout.vue'),
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, roles: ['learner'] },
       children: [
         { path: '', name: 'Dashboard', component: () => import('@/views/learner/Dashboard.vue'), meta: { title: '首页' } },
         { path: 'outcomes', name: 'OutcomeList', component: () => import('@/views/learner/outcome/OutcomeList.vue'), meta: { title: '成果导览' } },
@@ -86,7 +86,10 @@ router.beforeEach((to, _from, next) => {
     else if (user?.roles?.includes('expert')) next('/expert/reviews')
     else next('/')
   } else if (to.meta.guest && token) {
-    next('/')
+    if (user?.roles?.includes('admin')) next('/admin')
+    else if (user?.roles?.includes('auditor')) next('/auditor/cert/audit')
+    else if (user?.roles?.includes('expert')) next('/expert/reviews')
+    else next('/')
   } else {
     next()
   }

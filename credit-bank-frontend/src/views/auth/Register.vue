@@ -143,7 +143,11 @@ const rules = {
   realName: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码不能少于 6 位', trigger: 'blur' }
+    {
+      pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,64}$/,
+      message: '密码必须为 8-64 位，并包含大小写字母、数字和特殊字符',
+      trigger: 'blur'
+    }
   ],
   confirmPassword: [{ required: true, validator: validateConfirmPassword, trigger: 'blur' }],
   phone: [

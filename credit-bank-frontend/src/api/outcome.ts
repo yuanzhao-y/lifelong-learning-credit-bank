@@ -1,6 +1,6 @@
 import request from './index'
 export function getPublicOutcomes(params: any) { return request.get('/public/outcomes', { params }) }
-export function getPublicOutcomeDetail(id: number) { return request.get(`/public/outcomes/${id}`) }
+export function getPublicOutcomeDetail(id: string | number) { return request.get(`/public/outcomes/${id}`) }
 export function getOutcomeList(params: any) { return request.get('/outcomes', { params }) }
 export function getMyLearnerOutcomes(params: any) { return request.get('/learner-outcomes/mine', { params }) }
 export function createOutcome(data: any) { return request.post('/outcomes', data) }

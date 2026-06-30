@@ -25,12 +25,13 @@ request.interceptors.response.use(
     return Promise.reject(new Error(message))
   },
   (error) => {
+    const backendMessage = error.response?.data?.message
     if (error.response?.status === 401) {
       removeToken()
       router.push('/login')
       ElMessage.error('登录已过期，请重新登录')
     } else {
-      ElMessage.error(error.message || '网络错误')
+      ElMessage.error(backendMessage || error.message || '网络错误')
     }
     return Promise.reject(error)
   }
