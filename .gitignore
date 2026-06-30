@@ -31,6 +31,18 @@ coverage/
 # Local report materials
 素材/
 测试文档交付-20260629/
+render_check_module_pagebreak_final_20260630/
+render_check_module_pagebreak_pdf_20260630/
+render_check_unreadable_fix_20260630/
+lo_profile_unreadable_fix_20260630/
+lo_roundtrip_unreadable_fix_20260630/
+render_check_caption_shortening_20260630/
+render_check_content_fit_20260630/
+render_check_content_fit_rewrite_20260630/
+render_check_db_diagrams_final_20260630/
+render_check_db_diagrams_replace_20260630/
+render_check_er_20260630/
+render_check_module_pagebreak_20260630/
 202313160930-周康-实训报告*
 *.md
 202313160930-周康-实训报告.docx
