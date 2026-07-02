@@ -21,8 +21,8 @@
         >
           <div class="timeline-card-content glass-card">
             <div class="card-left">
-              <h4>{{ item.school }}</h4>
-              <div class="major-degree">{{ item.major }} · {{ item.degree }}</div>
+              <h4>{{ item.schoolName }}</h4>
+              <div class="major-degree">{{ item.major }} · {{ item.educationLevel }}</div>
             </div>
             <div class="card-right">
               <el-button link type="primary" @click="showEditDialog(item)">编辑</el-button>
@@ -39,8 +39,8 @@
     <!-- Edit/Add Dialog -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑教育经历' : '添加教育经历'" width="45%">
       <el-form :model="form" ref="formRef" :rules="rules" label-position="top">
-        <el-form-item label="学校名称" prop="school">
-          <el-input v-model="form.school" placeholder="请输入学校官方全称" />
+        <el-form-item label="学校名称" prop="schoolName">
+          <el-input v-model="form.schoolName" placeholder="请输入学校官方全称" />
         </el-form-item>
         <el-row :gutter="20">
           <el-col :span="12" :xs="24">
@@ -49,8 +49,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" :xs="24">
-            <el-form-item label="学历 / 学位" prop="degree">
-              <el-input v-model="form.degree" placeholder="如：本科/学士、硕士研究生..." />
+            <el-form-item label="学历 / 学位" prop="educationLevel">
+              <el-input v-model="form.educationLevel" placeholder="如：本科/学士、硕士研究生..." />
             </el-form-item>
           </el-col>
         </el-row>
@@ -105,17 +105,25 @@ const currentId = ref<number | null>(null)
 const formRef = ref<FormInstance>()
 
 const form = reactive({
-  school: '',
+  schoolName: '',
   major: '',
-  degree: '',
+  educationLevel: '',
   enrollmentDate: '',
   graduationDate: ''
 })
 
 const rules = {
-  school: [{ required: true, message: '学校名称不能为空', trigger: 'blur' }],
+  schoolName: [{ required: true, message: '学校名称不能为空', trigger: 'blur' }],
   major: [{ required: true, message: '专业名称不能为空', trigger: 'blur' }]
 }
+
+const buildPayload = () => ({
+  schoolName: form.schoolName,
+  major: form.major,
+  educationLevel: form.educationLevel,
+  enrollmentDate: form.enrollmentDate || null,
+  graduationDate: form.graduationDate || null
+})
 
 const loadItems = async () => {
   loading.value = true
@@ -129,7 +137,7 @@ const loadItems = async () => {
 const showAddDialog = () => {
   isEdit.value = false
   currentId.value = null
-  Object.assign(form, { school: '', major: '', degree: '', enrollmentDate: '', graduationDate: '' })
+  Object.assign(form, { schoolName: '', major: '', educationLevel: '', enrollmentDate: '', graduationDate: '' })
   dialogVisible.value = true
 }
 
@@ -146,11 +154,12 @@ const handleSave = async () => {
     if (valid) {
       saving.value = true
       try {
+        const payload = buildPayload()
         if (isEdit.value && currentId.value) {
-          await updateEducation(currentId.value, form)
+          await updateEducation(currentId.value, payload)
           ElMessage.success('更新成功')
         } else {
-          await createEducation(form)
+          await createEducation(payload)
           ElMessage.success('添加成功')
         }
         dialogVisible.value = false

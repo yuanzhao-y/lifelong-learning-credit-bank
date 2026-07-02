@@ -21,7 +21,7 @@
         >
           <div class="timeline-card-content glass-card">
             <div class="card-left">
-              <h4>{{ item.company }}</h4>
+              <h4>{{ item.companyName }}</h4>
               <div class="position-info">{{ item.position }}</div>
             </div>
             <div class="card-right">
@@ -39,8 +39,8 @@
     <!-- Edit/Add Dialog -->
     <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑工作经历' : '添加工作经历'" width="45%">
       <el-form :model="form" ref="formRef" :rules="rules" label-position="top">
-        <el-form-item label="企业/单位名称" prop="company">
-          <el-input v-model="form.company" placeholder="请输入任职单位全称" />
+        <el-form-item label="企业/单位名称" prop="companyName">
+          <el-input v-model="form.companyName" placeholder="请输入任职单位全称" />
         </el-form-item>
         <el-form-item label="岗位 / 职务" prop="position">
           <el-input v-model="form.position" placeholder="请输入具体任职岗位名称" />
@@ -96,17 +96,24 @@ const currentId = ref<number | null>(null)
 const formRef = ref<FormInstance>()
 
 const form = reactive({
-  company: '',
+  companyName: '',
   position: '',
   entryDate: '',
   leaveDate: ''
 })
 
 const rules = {
-  company: [{ required: true, message: '企业/单位名称不能为空', trigger: 'blur' }],
+  companyName: [{ required: true, message: '企业/单位名称不能为空', trigger: 'blur' }],
   position: [{ required: true, message: '任职岗位不能为空', trigger: 'blur' }],
   entryDate: [{ required: true, message: '入职时间不能为空', trigger: 'change' }]
 }
+
+const buildPayload = () => ({
+  companyName: form.companyName,
+  position: form.position,
+  entryDate: form.entryDate || null,
+  leaveDate: form.leaveDate || null
+})
 
 const loadItems = async () => {
   loading.value = true
@@ -120,7 +127,7 @@ const loadItems = async () => {
 const showAddDialog = () => {
   isEdit.value = false
   currentId.value = null
-  Object.assign(form, { company: '', position: '', entryDate: '', leaveDate: '' })
+  Object.assign(form, { companyName: '', position: '', entryDate: '', leaveDate: '' })
   dialogVisible.value = true
 }
 
@@ -137,11 +144,12 @@ const handleSave = async () => {
     if (valid) {
       saving.value = true
       try {
+        const payload = buildPayload()
         if (isEdit.value && currentId.value) {
-          await updateWork(currentId.value, form)
+          await updateWork(currentId.value, payload)
           ElMessage.success('更新成功')
         } else {
-          await createWork(form)
+          await createWork(payload)
           ElMessage.success('添加成功')
         }
         dialogVisible.value = false
